@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		0D8CA8C21B220E180019560D /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CA8C11B220E180019560D /* main.cpp */; };
+		0D8CA8CA1B220EB30019560D /* CellId.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CA8C81B220EB30019560D /* CellId.cpp */; };
+		0D8CA8CE1B2211C60019560D /* Point.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CA8CC1B2211C60019560D /* Point.cpp */; };
+		0D8CA8D21B22238C0019560D /* CellDrawer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CA8D01B22238C0019560D /* CellDrawer.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +28,14 @@
 /* Begin PBXFileReference section */
 		0D8CA8BE1B220E180019560D /* HP3d */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = HP3d; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D8CA8C11B220E180019560D /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		0D8CA8C81B220EB30019560D /* CellId.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CellId.cpp; sourceTree = "<group>"; };
+		0D8CA8C91B220EB30019560D /* CellId.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellId.h; sourceTree = "<group>"; };
+		0D8CA8CB1B2210750019560D /* defs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = defs.h; sourceTree = "<group>"; };
+		0D8CA8CC1B2211C60019560D /* Point.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Point.cpp; sourceTree = "<group>"; };
+		0D8CA8CD1B2211C60019560D /* Point.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Point.h; sourceTree = "<group>"; };
+		0D8CA8CF1B221AC50019560D /* bitmap_image.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = bitmap_image.hpp; sourceTree = "<group>"; };
+		0D8CA8D01B22238C0019560D /* CellDrawer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CellDrawer.cpp; sourceTree = "<group>"; };
+		0D8CA8D11B22238C0019560D /* CellDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellDrawer.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,7 +68,15 @@
 		0D8CA8C01B220E180019560D /* HP3d */ = {
 			isa = PBXGroup;
 			children = (
+				0D8CA8CF1B221AC50019560D /* bitmap_image.hpp */,
 				0D8CA8C11B220E180019560D /* main.cpp */,
+				0D8CA8C81B220EB30019560D /* CellId.cpp */,
+				0D8CA8C91B220EB30019560D /* CellId.h */,
+				0D8CA8CB1B2210750019560D /* defs.h */,
+				0D8CA8CC1B2211C60019560D /* Point.cpp */,
+				0D8CA8CD1B2211C60019560D /* Point.h */,
+				0D8CA8D01B22238C0019560D /* CellDrawer.cpp */,
+				0D8CA8D11B22238C0019560D /* CellDrawer.h */,
 			);
 			path = HP3d;
 			sourceTree = "<group>";
@@ -118,6 +137,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0D8CA8D21B22238C0019560D /* CellDrawer.cpp in Sources */,
+				0D8CA8CE1B2211C60019560D /* Point.cpp in Sources */,
+				0D8CA8CA1B220EB30019560D /* CellId.cpp in Sources */,
 				0D8CA8C21B220E180019560D /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -129,7 +151,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -169,7 +191,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
