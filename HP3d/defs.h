@@ -9,8 +9,8 @@
 #ifndef HP3d_types_h
 #define HP3d_types_h
 
-using dimType = int;
-
+using dim_t = int;
+using mask_t = unsigned;
 #define FOR(x, n) for(int x = 0, __n = (n); x < __n; x++)
 #define FORI(x, a, n) for(int x = (a), __n = (n); x < __n; x++)
 #define FORR(x, n) for(int x = (n)-1; x >= 0; x--)

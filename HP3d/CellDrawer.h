@@ -22,6 +22,7 @@
 #include "EasyBMP_Geometry.h"
 #include "defs.h"
 #include "Point.h"
+#include "CellId.h"
 #include "Color.h"
 template<int DIMS>
 class CellDrawer;
@@ -35,6 +36,7 @@ class CellDrawer<2> {
     CellDrawer<2>(const CellDrawer& that) = delete;
 public:
     CellDrawer(int x1, int x2, int y1, int y2, int scale) :
+    x1(x1), x2(x2), y1(y1), y2(y2),
     width(scale*(x2-x1)+1),
     height(scale*(y2-y1)+1),
     scale(scale){
@@ -52,7 +54,16 @@ public:
     void draw(const Point<2>& pt, const Color& c = Colors::RED, int radius = 3) {
         DrawArc(image, toX(pt[0]), toY(pt[1]), radius, 0, 7, c);
     }
-    
+    void draw(const CellId<2>& i, const Color& c1 = Colors::BLUE, const Color& c2 = Colors::GREEN) {
+        int x1 = toX(i.getFrom()[0]);
+        int x2 = toX(i.getTo()[0])-1;
+        int y1 = toX(i.getFrom()[1]);
+        int y2 = toX(i.getTo()[1])-1;
+        DrawFastLine(image, x2, y2, x1, y2, c2);
+        DrawFastLine(image, x2, y2, x2, y1, c2);
+        DrawFastLine(image, x1, y1, x1, y2, c1);
+        DrawFastLine(image, x1, y1, x2, y1, c1);
+    }
     
     void save(const std::string& s) {
         image.WriteToFile(s.c_str());

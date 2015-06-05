@@ -15,6 +15,7 @@
 		0D8CA8DB1B2246350019560D /* EasyBMP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CA8D91B2246350019560D /* EasyBMP.cpp */; };
 		0D8CA8E31B2247530019560D /* EasyBMP_Font.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CA8DD1B2247530019560D /* EasyBMP_Font.cpp */; };
 		0D8CA8E41B2247530019560D /* EasyBMP_Geometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CA8DF1B2247530019560D /* EasyBMP_Geometry.cpp */; };
+		0D8CA8E81B224F1E0019560D /* Cell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CA8E61B224F1E0019560D /* Cell.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -37,7 +38,6 @@
 		0D8CA8CB1B2210750019560D /* defs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = defs.h; sourceTree = "<group>"; };
 		0D8CA8CC1B2211C60019560D /* Point.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Point.cpp; sourceTree = "<group>"; };
 		0D8CA8CD1B2211C60019560D /* Point.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Point.h; sourceTree = "<group>"; };
-		0D8CA8CF1B221AC50019560D /* bitmap_image.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = bitmap_image.hpp; sourceTree = "<group>"; };
 		0D8CA8D01B22238C0019560D /* CellDrawer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CellDrawer.cpp; sourceTree = "<group>"; };
 		0D8CA8D11B22238C0019560D /* CellDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellDrawer.h; sourceTree = "<group>"; };
 		0D8CA8D31B223DF40019560D /* Color.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Color.cpp; sourceTree = "<group>"; };
@@ -51,6 +51,8 @@
 		0D8CA8DE1B2247530019560D /* EasyBMP_Font.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EasyBMP_Font.h; sourceTree = "<group>"; };
 		0D8CA8DF1B2247530019560D /* EasyBMP_Geometry.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EasyBMP_Geometry.cpp; sourceTree = "<group>"; };
 		0D8CA8E01B2247530019560D /* EasyBMP_Geometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EasyBMP_Geometry.h; sourceTree = "<group>"; };
+		0D8CA8E61B224F1E0019560D /* Cell.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Cell.cpp; sourceTree = "<group>"; };
+		0D8CA8E71B224F1E0019560D /* Cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cell.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,7 +86,6 @@
 			isa = PBXGroup;
 			children = (
 				0D8CA8DC1B2246510019560D /* EasyBMP */,
-				0D8CA8CF1B221AC50019560D /* bitmap_image.hpp */,
 				0D8CA8C11B220E180019560D /* main.cpp */,
 				0D8CA8C81B220EB30019560D /* CellId.cpp */,
 				0D8CA8C91B220EB30019560D /* CellId.h */,
@@ -95,6 +96,8 @@
 				0D8CA8D11B22238C0019560D /* CellDrawer.h */,
 				0D8CA8D31B223DF40019560D /* Color.cpp */,
 				0D8CA8D41B223DF40019560D /* Color.h */,
+				0D8CA8E61B224F1E0019560D /* Cell.cpp */,
+				0D8CA8E71B224F1E0019560D /* Cell.h */,
 			);
 			path = HP3d;
 			sourceTree = "<group>";
@@ -171,6 +174,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0D8CA8E81B224F1E0019560D /* Cell.cpp in Sources */,
 				0D8CA8D21B22238C0019560D /* CellDrawer.cpp in Sources */,
 				0D8CA8E41B2247530019560D /* EasyBMP_Geometry.cpp in Sources */,
 				0D8CA8CE1B2211C60019560D /* Point.cpp in Sources */,

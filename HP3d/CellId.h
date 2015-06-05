@@ -20,14 +20,42 @@ class CellId {
     
 public:
     CellId(const Point& from, const Point& to): from(from), to(to){}
-    const Point& getFrom() {
+    CellId(const Point& from, const PointDifference& size): from(from), to(from+size){}
+    const Point& getFrom() const {
         return from;
     }
-    const Point& getTo() {
+    const Point& getTo() const {
         return to;
     }
     PointDifference getSize() const {
         return to - from;
+    }
+    
+    bool isCube() const {
+        auto size = getSize();
+        return size.isCube();
+    }
+    bool isAligned() const {
+        auto size = getSize();
+        auto & from = getFrom();
+        FOR(i, DIMS) {
+            int p = size[i]-1;
+            if(from[i] & p) return false;
+        }
+        return true;
+    }
+    
+    CellId getChildId(mask_t id) const {
+        auto pd = getSize()>>1;
+        auto bmpd = pd.selectDimsByBitMask(id);
+        return CellId(getFrom() + bmpd, pd);
+    }
+    
+    CellId getAlignedParent() const {
+        auto nsize = getSize()<<1;
+        int bits = nsize.countZeroBits();
+        auto pt = getFrom().resetBits(bits);
+        return CellId(pt, nsize);
     }
 };
 
