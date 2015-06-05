@@ -13,6 +13,8 @@
 		0D8CA8D21B22238C0019560D /* CellDrawer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CA8D01B22238C0019560D /* CellDrawer.cpp */; };
 		0D8CA8D51B223DF40019560D /* Color.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CA8D31B223DF40019560D /* Color.cpp */; };
 		0D8CA8DB1B2246350019560D /* EasyBMP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CA8D91B2246350019560D /* EasyBMP.cpp */; };
+		0D8CA8E31B2247530019560D /* EasyBMP_Font.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CA8DD1B2247530019560D /* EasyBMP_Font.cpp */; };
+		0D8CA8E41B2247530019560D /* EasyBMP_Geometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CA8DF1B2247530019560D /* EasyBMP_Geometry.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -45,6 +47,10 @@
 		0D8CA8D81B2246350019560D /* EasyBMP_VariousBMPutilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EasyBMP_VariousBMPutilities.h; sourceTree = "<group>"; };
 		0D8CA8D91B2246350019560D /* EasyBMP.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EasyBMP.cpp; sourceTree = "<group>"; };
 		0D8CA8DA1B2246350019560D /* EasyBMP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EasyBMP.h; sourceTree = "<group>"; };
+		0D8CA8DD1B2247530019560D /* EasyBMP_Font.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EasyBMP_Font.cpp; sourceTree = "<group>"; };
+		0D8CA8DE1B2247530019560D /* EasyBMP_Font.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EasyBMP_Font.h; sourceTree = "<group>"; };
+		0D8CA8DF1B2247530019560D /* EasyBMP_Geometry.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EasyBMP_Geometry.cpp; sourceTree = "<group>"; };
+		0D8CA8E01B2247530019560D /* EasyBMP_Geometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EasyBMP_Geometry.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +102,10 @@
 		0D8CA8DC1B2246510019560D /* EasyBMP */ = {
 			isa = PBXGroup;
 			children = (
+				0D8CA8DD1B2247530019560D /* EasyBMP_Font.cpp */,
+				0D8CA8DE1B2247530019560D /* EasyBMP_Font.h */,
+				0D8CA8DF1B2247530019560D /* EasyBMP_Geometry.cpp */,
+				0D8CA8E01B2247530019560D /* EasyBMP_Geometry.h */,
 				0D8CA8D61B2246350019560D /* EasyBMP_BMP.h */,
 				0D8CA8D71B2246350019560D /* EasyBMP_DataStructures.h */,
 				0D8CA8D81B2246350019560D /* EasyBMP_VariousBMPutilities.h */,
@@ -162,9 +172,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				0D8CA8D21B22238C0019560D /* CellDrawer.cpp in Sources */,
+				0D8CA8E41B2247530019560D /* EasyBMP_Geometry.cpp in Sources */,
 				0D8CA8CE1B2211C60019560D /* Point.cpp in Sources */,
 				0D8CA8D51B223DF40019560D /* Color.cpp in Sources */,
 				0D8CA8DB1B2246350019560D /* EasyBMP.cpp in Sources */,
+				0D8CA8E31B2247530019560D /* EasyBMP_Font.cpp in Sources */,
 				0D8CA8CA1B220EB30019560D /* CellId.cpp in Sources */,
 				0D8CA8C21B220E180019560D /* main.cpp in Sources */,
 			);
