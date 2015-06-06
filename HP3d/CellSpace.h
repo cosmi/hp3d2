@@ -19,12 +19,12 @@
 
 #include <boost/range/adaptor/map.hpp>
 
-template<int DIMS>
+template<int DIMS, class Cell = ::Cell<DIMS> >
 class CellSpace {
 public:
     using Point = ::Point<DIMS>;
     using PointDifference = ::PointDifference<DIMS>;
-    using Cell = ::Cell<DIMS>;
+    using CellType = Cell;
     using CellId = ::CellId<DIMS>;
 protected:
     std::vector<Cell*> roots;
@@ -87,6 +87,27 @@ public:
             if(i->getId().covers(cid)) return true;
         }
         return false;
+    }
+    
+    void enforceTauRule(const CellId & id) {
+        splitTo(id);
+        FOR(dim, DIMS) {
+            auto p1 = id.move(dim, -1);
+            if(covers(p1)) enforceTauRule(p1.getAlignedParent());
+            auto p2 = id.move(dim, +1);
+            if(covers(p2)) enforceTauRule(p2.getAlignedParent());
+        }
+    }
+    
+    void enforceTauRule() {
+        std::vector<CellId> v;
+        v.reserve(dict.size());
+        for(auto & i : dict) {
+            v.push_back(i.first);
+        }
+        for(auto & i : v) {
+            enforceTauRule(i);
+        }
     }
 };
 

@@ -68,7 +68,7 @@ public:
         return CellId(pt, nsize);
     }
     
-    CellId move(int direction, int distance) {
+    CellId move(int direction, int distance) const {
         auto size = getSize();
         auto & from = getFrom();
         auto diff = size.selectDim(direction) * distance;

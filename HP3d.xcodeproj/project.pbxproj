@@ -17,6 +17,7 @@
 		0D8CA8E41B2247530019560D /* EasyBMP_Geometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CA8DF1B2247530019560D /* EasyBMP_Geometry.cpp */; settings = {COMPILER_FLAGS = "-w"; }; };
 		0D8CA8E81B224F1E0019560D /* Cell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CA8E61B224F1E0019560D /* Cell.cpp */; };
 		0D8CA8EB1B230DF00019560D /* CellSpace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CA8E91B230DF00019560D /* CellSpace.cpp */; };
+		0DB5E1EF1B2346DA004E5FAE /* GridBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DB5E1ED1B2346DA004E5FAE /* GridBuilder.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -56,6 +57,8 @@
 		0D8CA8E71B224F1E0019560D /* Cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cell.h; sourceTree = "<group>"; };
 		0D8CA8E91B230DF00019560D /* CellSpace.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CellSpace.cpp; sourceTree = "<group>"; };
 		0D8CA8EA1B230DF00019560D /* CellSpace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellSpace.h; sourceTree = "<group>"; };
+		0DB5E1ED1B2346DA004E5FAE /* GridBuilder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GridBuilder.cpp; sourceTree = "<group>"; };
+		0DB5E1EE1B2346DA004E5FAE /* GridBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridBuilder.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +106,8 @@
 				0D8CA8E71B224F1E0019560D /* Cell.h */,
 				0D8CA8E91B230DF00019560D /* CellSpace.cpp */,
 				0D8CA8EA1B230DF00019560D /* CellSpace.h */,
+				0DB5E1ED1B2346DA004E5FAE /* GridBuilder.cpp */,
+				0DB5E1EE1B2346DA004E5FAE /* GridBuilder.h */,
 			);
 			path = HP3d;
 			sourceTree = "<group>";
@@ -179,6 +184,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0DB5E1EF1B2346DA004E5FAE /* GridBuilder.cpp in Sources */,
 				0D8CA8E81B224F1E0019560D /* Cell.cpp in Sources */,
 				0D8CA8D21B22238C0019560D /* CellDrawer.cpp in Sources */,
 				0D8CA8E41B2247530019560D /* EasyBMP_Geometry.cpp in Sources */,

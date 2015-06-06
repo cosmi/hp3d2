@@ -12,6 +12,7 @@
 #include "CellId.h"
 #include "CellSpace.h"
 #include "CellDrawer.h"
+#include "GridBuilder.h"
 using namespace std;
 
 int main(int argc, const char * argv[]) {
@@ -20,8 +21,10 @@ int main(int argc, const char * argv[]) {
 
     auto cs = CellSpace<2>();
     cs.initWithOneCell(4);
-    cs.splitTo(CellId<2>::unit());
-    CellDrawer<2> cd(cs.getBounds(),10);
+//    cs.splitTo(CellId<2>::unit().move(0,7).move(1,7));
+    buildSingularity(cs,0);
+    cs.enforceTauRule();
+    CellDrawer<2> cd(cs.getBounds(),50);
 //    cd.draw(cid.getChildId(3));
 //    cd.draw(cid.getChildId(3).getChildId(3).getAlignedParent());
 //    cd.draw(cid.getChild(2));

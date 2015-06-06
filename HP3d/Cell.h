@@ -62,5 +62,7 @@ public:
     }
 };
 
+template<int DIMS>
+using DefaultCell = Cell<DIMS>;
 
 #endif /* defined(__HP3d__Cell__) */
