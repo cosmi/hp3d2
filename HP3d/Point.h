@@ -10,14 +10,23 @@
 #define __HP3d__Point__
 #include <algorithm>
 #include <iostream>
+#include <functional>
 
 #include "defs.h"
+
+enum class PointRelation {
+    LESS, LESS_OR_EQ,
+    EQ, MORE_OR_EQ, MORE,
+    UNORDERED
+};
 
 template<int DIMS>
 class PointBase {
 protected:
-    PointBase() {}
     dim_t dims[DIMS];
+    PointBase() {
+        FOR(i, DIMS) dims[i] = 0;
+    }
 public:
     PointBase(std::initializer_list<dim_t> list ) {
         int i = 0;
@@ -37,7 +46,49 @@ public:
         }
         os << ")";
     }
-
+    PointRelation getRelation(const PointBase& pb) const {
+        int le = 0, eq = 0, mo = 0;
+        FOR(i, DIMS) {
+            if(dims[i] < pb[i]) le++;
+            else if(dims[i] > pb[i]) mo++;
+            else eq++;
+        }
+        if(mo == 0) {
+            if(le == 0) return PointRelation::EQ;
+            if(eq == 0) return PointRelation::LESS;
+            return PointRelation::LESS_OR_EQ;
+        } else {
+            if(le != 0) return PointRelation::UNORDERED;
+            if(eq == 0) return PointRelation::MORE;
+            return PointRelation::MORE_OR_EQ;
+        }
+    }
+    bool hasRelation(const PointBase& pb, PointRelation rel) const {
+        auto r = getRelation(pb);
+        if(r == rel) return true;
+        if(rel == PointRelation::LESS_OR_EQ) {
+            return r == PointRelation::EQ || r == PointRelation::LESS;
+        }
+        if(rel == PointRelation::MORE_OR_EQ) {
+            return r == PointRelation::EQ || r == PointRelation::MORE;
+        }
+        return false;
+    }
+    
+    static PointBase selectMinDims(const PointBase& a, const PointBase& b) {
+        PointBase pb;
+        FOR(i, DIMS) {
+            pb.dims[i] = std::min(a[i], b[i]);
+        }
+        return pb;
+    }
+    static PointBase selectMaxDims(const PointBase& a, const PointBase& b) {
+        PointBase pb;
+        FOR(i, DIMS) {
+            pb.dims[i] = std::max(a[i], b[i]);
+        }
+        return pb;
+    }
 };
 
 template<int DIMS>
@@ -48,13 +99,13 @@ class Point : public PointBase<DIMS>{
 protected:
     Point() {}
 public:
-    using PointBase = PointBase<DIMS>;
+    using PointBaseN = ::PointBase<DIMS>;
     
 //    Point(const Point&) = default;
-    explicit Point(const PointBase& pb):PointBase(pb){};
+    explicit Point(const PointBaseN& pb):PointBaseN(pb){};
     
     const bool operator==(const Point& pt) const {
-        FOR(i, DIMS) if(pt[i] != PointBase::dims[i]) return false;
+        FOR(i, DIMS) if(pt[i] != PointBaseN::dims[i]) return false;
         return true;
     }
     
@@ -65,9 +116,12 @@ public:
         Point p;
         int mask = ~((1<<bits)-1);
         FOR(i, DIMS) {
-            p.dims[i] = PointBase::dims[i] & mask;
+            p.dims[i] = PointBaseN::dims[i] & mask;
         }
         return p;
+    }
+    static Point origin() {
+        return Point();
     }
 };
 
@@ -77,9 +131,13 @@ template<int DIMS>
 class PointDifference: public PointBase<DIMS> {
 protected:
     PointDifference(){}
+    
+    explicit PointDifference(dim_t size) {
+        FOR(i, DIMS) this->dims[i] = size;
+    }
 public:
-    using PointBase = PointBase<DIMS>;
-    using Point = Point<DIMS>;
+    using PointBase = ::PointBase<DIMS>;
+    using Point = ::Point<DIMS>;
 
     const char* getTypePrefix() const { return "PD"; }
     
@@ -105,6 +163,13 @@ public:
         }
         return pd;
     }
+    PointDifference operator*(const int& by) const {
+        PointDifference pd;
+        FOR(i, DIMS) {
+            pd.dims[i] = (*this)[i]*by;
+        }
+        return pd;
+    }
 
     PointDifference operator<<(const int& by) const {
         PointDifference pd;
@@ -120,6 +185,11 @@ public:
         FOR(i, DIMS) {
             pd.dims[i] = (mask&(1<<i))?(*this)[i]:0;
         }
+        return pd;
+    }
+    PointDifference selectDim(int dim) const {
+        PointDifference pd;
+        pd.dims[dim] = PointBase::dims[dim];
         return pd;
     }
     bool isCube() const {
@@ -141,7 +211,10 @@ public:
         }
         return cnt;
     }
-
+    
+    static PointDifference cube(dim_t size) {
+        return PointDifference(size);
+    }
 };
 
 
@@ -186,5 +259,21 @@ std::ostream& operator<<(std::ostream& os,
     os << "PD";
     point.printTo(os);
     return os;
+}
+
+namespace std {
+    template<int DIMS>
+    struct hash<PointBase<DIMS> >: public unary_function<PointBase<DIMS>, size_t> {
+        hash<dim_t> subHash;
+        size_t operator()(const PointBase<DIMS>& pb) const {
+            size_t ret = 0;
+            const size_t PRIME = 961748941;
+            FOR(i, DIMS) {
+                ret *= PRIME;
+                ret += subHash(pb[i]);
+            }
+            return ret;
+        }
+    };
 }
 #endif /* defined(__HP3d__Point__) */

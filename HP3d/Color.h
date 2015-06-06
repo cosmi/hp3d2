@@ -29,6 +29,7 @@ namespace Colors {
     const Color WHITE = Color(255, 255, 255);
     const Color BLUE = Color(0, 0, 255);
     const Color GREEN = Color(0, 255, 0);
+    const Color MAGENTA = Color(255, 0, 255);
 }
 
 #endif /* defined(__HP3d__Color__) */

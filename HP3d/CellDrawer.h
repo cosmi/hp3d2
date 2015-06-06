@@ -23,11 +23,12 @@
 #include "defs.h"
 #include "Point.h"
 #include "CellId.h"
+#include "CellSpace.h"
 #include "Color.h"
 template<int DIMS>
 class CellDrawer;
 
-
+#include <typeinfo>
 template<>
 class CellDrawer<2> {
     int x1, x2, y1, y2, scale, width, height;
@@ -42,7 +43,9 @@ public:
     scale(scale){
         image.SetSize(width, height);
         image.SetBitDepth(24);
-//        image.set_all_channels(255,255,255);
+    }
+    CellDrawer(const CellId<2> & bounds, int scale)
+        :CellDrawer(bounds.getFrom()[0], bounds.getTo()[0], bounds.getFrom()[1], bounds.getTo()[1], scale) {
     }
     
     int toX(int p) {
@@ -54,7 +57,7 @@ public:
     void draw(const Point<2>& pt, const Color& c = Colors::RED, int radius = 3) {
         DrawArc(image, toX(pt[0]), toY(pt[1]), radius, 0, 7, c);
     }
-    void draw(const CellId<2>& i, const Color& c1 = Colors::BLUE, const Color& c2 = Colors::GREEN) {
+    void draw(const CellId<2>& i, const Color& c1 = Colors::BLUE, const Color& c2 = Colors::GREEN, const Color& c3 = Colors::MAGENTA, int radius = 2) {
         int x1 = toX(i.getFrom()[0]);
         int x2 = toX(i.getTo()[0])-1;
         int y1 = toX(i.getFrom()[1]);
@@ -63,6 +66,15 @@ public:
         DrawFastLine(image, x2, y2, x2, y1, c2);
         DrawFastLine(image, x1, y1, x1, y2, c1);
         DrawFastLine(image, x1, y1, x2, y1, c1);
+        DrawArc(image, (x1+x2+1)/2, (y1+y2+1)/2, radius, 0, 7, c3);
+    }
+    
+    
+    void draw(const CellSpace<2> & cs) {
+        for(auto & cellptr : cs.getCells()) {
+//            std::cout << '"' << typeid(cell).name() << '"' <<std::endl;
+            draw(cellptr->getId());
+        }
     }
     
     void save(const std::string& s) {
@@ -72,7 +84,7 @@ public:
     void open() {
         std::string fname = "/tmp/celldrawer";
         int tsn = (int)time(nullptr);
-        std::string ts = (std::ostringstream() << tsn).str();
+        std::string ts = toString(tsn);
         fname+=ts;
         fname+=".bmp";
         save(fname);

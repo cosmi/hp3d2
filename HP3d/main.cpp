@@ -10,22 +10,26 @@
 #include <iostream>
 #include "Point.h"
 #include "CellId.h"
+#include "CellSpace.h"
 #include "CellDrawer.h"
 using namespace std;
 
 int main(int argc, const char * argv[]) {
     // insert code here...
-    auto p = Point<2>({0,0});
-    auto p2 = Point<2>({4,4});
 
-    CellDrawer<2> cd(0, 10, 0, 10, 10);
-    auto cid = CellId<2>(p, p2);
+
+    auto cs = CellSpace<2>();
+    cs.initWithOneCell(4);
+    cs.splitTo(CellId<2>::unit());
+    CellDrawer<2> cd(cs.getBounds(),10);
 //    cd.draw(cid.getChildId(3));
 //    cd.draw(cid.getChildId(3).getChildId(3).getAlignedParent());
-    cd.draw(cid.getChildId(2).getAlignedParent());
-    cd.draw(p2);
+//    cd.draw(cid.getChild(2));
+//    cd.draw(cid.getChild(2).move(0, 2).move(1,1).getChild(0));
+    cd.draw(cs);
 //    cd.draw(p2);
 //    cd.save("/Users/cosmi/phd/output.bmp");
     cd.open();
+    
     return 0;
 }
