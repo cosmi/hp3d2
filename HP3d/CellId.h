@@ -28,6 +28,8 @@ public:
     static CellId null() {
         return CellId(Point::origin(), Point::origin());
     }
+    
+    
     const Point& getFrom() const {
         return from;
     }
@@ -82,6 +84,9 @@ public:
             && getTo().hasRelation(cid.getTo(), PointRelation::MORE_OR_EQ);
     }
     
+    
+    /* Bounds methods */
+ 
     static CellId getBounds(const CellId& a, const CellId& b) {
         return CellId(Point(PointBase::selectMinDims(a.getFrom(),b.getFrom())), Point(PointBase::selectMaxDims(a.getTo(),b.getTo())));
     }
@@ -95,7 +100,59 @@ public:
         }
         return res;
     }
+ 
     
+    
+    CellId getHalf() const {
+        auto size = getSize();
+        size_t splittingDim = size.getLongestDim();
+        assert(size[splittingDim]%2 == 0);
+        auto nsize = PointDifference(size.replaceDim(splittingDim, size[splittingDim]/2));
+        return CellId(getFrom(), nsize);
+    }
+    
+    
+    /* Node methods */
+    
+    size_t countNonZeroDims() const {
+        size_t ret = 0;
+        FOR(i, DIMS) {
+            if(from[i] != to[i]) ret++;
+        }
+        return ret;
+    }
+    
+    size_t countDimsOnBounds(const CellId& bounds) const {
+        size_t ret = 0;
+        FOR(i, DIMS) if(from[i] == to[i]) {
+            auto v = from[i];
+            if(bounds.getFrom()[i] == v || bounds.getTo()[i] == v) {
+                ret++;
+            }
+        }
+        return ret;
+    }
+    
+    bool isNodeOnCell(const CellId& cid) const {
+        FOR(i, DIMS) if(from[i] != to[i]) {
+            if(cid.getFrom()[i] != from[i] || cid.getTo()[i] != to[i]) return false;
+        } else {
+            
+//            assert(!(cid.getFrom()[i] != from[i] && cid.getTo()[i] != from[i])); // TODO: for now, disallow false here
+            if(cid.getFrom()[i] != from[i] && cid.getTo()[i] != from[i]) return false;
+        }
+        return true;
+    }
+    
+    CellId getReducedDimId(int dim, bool onTo) const {
+        if(onTo) {
+            return CellId(Point(from.replaceDim(dim, to[dim])), to);
+        } else {
+            return CellId(from, Point(to.replaceDim(dim, from[dim])));
+        }
+    }
+    
+
 };
 
 

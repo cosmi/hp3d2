@@ -24,6 +24,8 @@
 #include "Point.h"
 #include "CellId.h"
 #include "CellSpace.h"
+#include "CellNodeSpace.h"
+#include "CellIdSet.h"
 #include "Color.h"
 template<int DIMS>
 class CellDrawer;
@@ -57,6 +59,13 @@ public:
     void draw(const Point<2>& pt, const Color& c = Colors::RED, int radius = 3) {
         DrawArc(image, toX(pt[0]), toY(pt[1]), radius, 0, 7, c);
     }
+    void drawMidPoint(const CellId<2>& i, const Color& c = Colors::MAGENTA, int radius = 2) {
+        int x1 = toX(i.getFrom()[0]);
+        int x2 = toX(i.getTo()[0]);
+        int y1 = toX(i.getFrom()[1]);
+        int y2 = toX(i.getTo()[1]);
+        DrawArc(image, (x1+x2)/2, (y1+y2)/2, radius, 0, 7, c);
+    }
     void draw(const CellId<2>& i, const Color& c1 = Colors::BLUE, const Color& c2 = Colors::GREEN, const Color& c3 = Colors::MAGENTA, int radius = 2) {
         int x1 = toX(i.getFrom()[0]);
         int x2 = toX(i.getTo()[0])-1;
@@ -66,17 +75,33 @@ public:
         DrawFastLine(image, x2, y2, x2, y1, c2);
         DrawFastLine(image, x1, y1, x1, y2, c1);
         DrawFastLine(image, x1, y1, x2, y1, c1);
-        DrawArc(image, (x1+x2+1)/2, (y1+y2+1)/2, radius, 0, 7, c3);
+//        drawMidPoint(i, c3, radius);
     }
     
     
     void draw(const CellSpace<2> & cs) {
-        for(auto & cell : cs.getLeaves()) {
-//            std::cout << '"' << typeid(cell).name() << '"' <<std::endl;
+        for(auto & cell : cs.getCells()) {
             draw(cell.getId());
         }
     }
-    
+    void draw(const CellNodeSpace<2> & cs) {
+        for(auto & cell : cs.getLeaves()) {
+            draw(cell.getId());
+        }
+        for(auto & id : cs.getConstrainedNodes()) {
+            drawMidPoint(id, Colors::RED,4 + 2*id.countNonZeroDims());
+        }
+        for(auto & id : cs.getFreeNodes()) {
+            drawMidPoint(id, Colors::GREEN, 4 + 2*id.countNonZeroDims());
+        }
+    }
+
+    void draw(const CellIdSet<2> & cis) {
+        for(auto & cid : cis.getIds()) {
+            draw(cid);
+        }
+    }
+
     void save(const std::string& s) {
         image.WriteToFile(s.c_str());
     }

@@ -11,6 +11,7 @@
 #include <algorithm>
 #include <iostream>
 #include <array>
+#include <list>
 
 #include "defs.h"
 #include "CellId.h"
@@ -31,7 +32,6 @@ public:
     Cell(const CellId& id):id(id), children(nullptr) {
         assert(id.isCube());
         assert(id.isAligned());
-        std::cout << ">>" << this->getId() << std::endl;
     }
     ~Cell() {
         delete [] children;
@@ -60,6 +60,21 @@ public:
     const ChildrenArray& getChildren() const {
         return *children;
     }
+    
+    
+    using CellList = std::list<const Cell*>;
+    CellList getCoveringCells(const CellId& cid) const {
+        if(!id.covers(cid)) return CellList();
+        if(!isLeaf()) {
+            CellList cl;
+            for(auto& child: getChildren()) {
+                cl.splice(cl.end(), child.getCoveringCells(cid));
+            }
+            if(!cl.empty()) return cl;
+        }
+        return CellList(1, this);
+    }
+    
 };
 
 template<int DIMS>

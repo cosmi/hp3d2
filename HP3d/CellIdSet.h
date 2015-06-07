@@ -15,14 +15,16 @@
 
 #include "defs.h"
 #include "CellId.h"
+#include "CellSpace.h"
 
 template<int DIMS>
 struct CellIdComparator: public std::binary_function<CellId<DIMS>, CellId<DIMS>, bool> {
     size_t operator()(const CellId<DIMS>& id1, const CellId<DIMS>& id2) const {
         auto sizeDiff = id2.getSide() - id1.getSide();
         if(sizeDiff != 0) return 0 < sizeDiff;
+        auto& from1 = id1.getFrom(), &from2 = id2.getFrom();
         FOR(i, DIMS) {
-            if(id1[i] != id2[i]) return id1[i] < id2[i];
+            if(from1[i] != from2[i]) return from1[i] < from2[i];
         }
         return false;
     }
@@ -39,10 +41,15 @@ public:
         return ids;
     }
     
-    bool addId(const CellId& cid) const {
-        return ids.insert(cid);
+    bool addId(const CellId& cid) {
+        return ids.insert(cid).second;
     }
-    
+    template<class CellType>
+    CellIdSet(const CellSpace<DIMS, CellType>& cs) {
+        auto leaves = cs.getLeavesIds();
+        ids.insert(leaves.begin(), leaves.end());
+    }
+    CellIdSet(){}
 };
 
 namespace std {

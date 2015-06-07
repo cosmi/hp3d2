@@ -13,12 +13,13 @@
 #include <unordered_map>
 #include <iostream>
 #include <numeric>
-
+#include <type_traits>
 #include "defs.h"
 #include "Cell.h"
 
 #include <boost/range/adaptor/map.hpp>
 #include <boost/range/adaptor/filtered.hpp>
+#include <boost/range/adaptor/transformed.hpp>
 #include <boost/range/adaptor/indirected.hpp>
 
 
@@ -26,6 +27,13 @@ template <class CellType>
 struct LeafFilter {
     bool operator()(const CellType& ct) const {
         return ct.isLeaf();
+    }
+};
+
+template <class IdType, class CellType>
+struct ToIdTransform {
+    const IdType& operator()(const CellType& ct) const {
+        return ct.getId();
     }
 };
 
@@ -40,7 +48,6 @@ protected:
     std::vector<Cell*> roots;
     std::unordered_map<CellId, Cell*> dict;
     void makeSplit(const CellId& parent) {
-        std::cout << "SPL " << parent <<std::endl;
         if(dict.count(parent)==0) {
             makeSplit(parent.getAlignedParent());
         }
@@ -61,6 +68,20 @@ public:
         using namespace boost::adaptors;
         return dict | map_values | indirected;
     }
+    
+    const CellType& getCell(const CellId& cid) const {
+        return *dict.find(cid);
+    }
+    
+    std::list<const CellType*> getCoveringCells(const CellId& cid) const {
+        std::list<const CellType*> cl;
+        for(auto cellptr : roots) {
+
+            cl.splice(cl.end(), cellptr->getCoveringCells(cid));
+        }
+        return cl;
+    }
+    
     size_t countCells() const {
         return dict.size();
     }
@@ -70,16 +91,18 @@ public:
         return getCells() | filtered(LeafFilter<CellType>());
     }
     
-    const boost::select_first_range<std::unordered_map<CellId, Cell*> > getIds() const {
+
+    auto getIds() const -> decltype(dict | boost::adaptors::map_keys){
         using namespace boost::adaptors;
         return dict | map_keys;
     }
     
+    auto getLeavesIds() const -> decltype(CellSpace::getLeaves() | boost::adaptors::transformed(ToIdTransform<CellId, CellType>())) {
+        using namespace boost::adaptors;
+        return getLeaves() | transformed(ToIdTransform<CellId, CellType>());
+    }
+    
     void split(const CellId& id) {
-        std::cout << dict.size() << std::endl;
-        for(auto it : dict) {
-            std::cout << it.first << std::endl;
-        }
 
         assert(dict.count(id) > 0);
         Cell* c = dict[id];
@@ -112,8 +135,6 @@ public:
         }
         return false;
     }
-    
-    
 };
 
 

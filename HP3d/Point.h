@@ -89,6 +89,11 @@ public:
         }
         return pb;
     }
+    PointBase replaceDim(int dim, dim_t value) const {
+        auto pb = *this;
+        pb.dims[dim] = value;
+        return pb;
+    }
 };
 
 template<int DIMS>
@@ -199,6 +204,11 @@ public:
             if(p != PointBase::dims[i]) return false;
         }
         return true;
+    }
+    size_t getLongestDim() const {
+        auto ret = std::max_element(PointBase::dims, PointBase::dims+DIMS) - PointBase::dims;
+        std::cout << "RET " << ret << std::endl;
+        return ret;
     }
     
     int countZeroBits() const {
