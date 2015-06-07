@@ -18,6 +18,7 @@
 		0D8CA8E81B224F1E0019560D /* Cell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CA8E61B224F1E0019560D /* Cell.cpp */; };
 		0D8CA8EB1B230DF00019560D /* CellSpace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CA8E91B230DF00019560D /* CellSpace.cpp */; };
 		0DB5E1EF1B2346DA004E5FAE /* GridBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DB5E1ED1B2346DA004E5FAE /* GridBuilder.cpp */; };
+		0DB5E1F21B237E96004E5FAE /* CellIdSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DB5E1F01B237E96004E5FAE /* CellIdSet.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -59,6 +60,8 @@
 		0D8CA8EA1B230DF00019560D /* CellSpace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellSpace.h; sourceTree = "<group>"; };
 		0DB5E1ED1B2346DA004E5FAE /* GridBuilder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GridBuilder.cpp; sourceTree = "<group>"; };
 		0DB5E1EE1B2346DA004E5FAE /* GridBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridBuilder.h; sourceTree = "<group>"; };
+		0DB5E1F01B237E96004E5FAE /* CellIdSet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CellIdSet.cpp; sourceTree = "<group>"; };
+		0DB5E1F11B237E96004E5FAE /* CellIdSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellIdSet.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +111,8 @@
 				0D8CA8EA1B230DF00019560D /* CellSpace.h */,
 				0DB5E1ED1B2346DA004E5FAE /* GridBuilder.cpp */,
 				0DB5E1EE1B2346DA004E5FAE /* GridBuilder.h */,
+				0DB5E1F01B237E96004E5FAE /* CellIdSet.cpp */,
+				0DB5E1F11B237E96004E5FAE /* CellIdSet.h */,
 			);
 			path = HP3d;
 			sourceTree = "<group>";
@@ -195,6 +200,7 @@
 				0D8CA8CA1B220EB30019560D /* CellId.cpp in Sources */,
 				0D8CA8EB1B230DF00019560D /* CellSpace.cpp in Sources */,
 				0D8CA8C21B220E180019560D /* main.cpp in Sources */,
+				0DB5E1F21B237E96004E5FAE /* CellIdSet.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

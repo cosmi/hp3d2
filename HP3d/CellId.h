@@ -37,7 +37,9 @@ public:
     PointDifference getSize() const {
         return to - from;
     }
-    
+    dim_t getSide() const {
+        return getSize().getSide();
+    }
     bool isCube() const {
         auto size = getSize();
         return size.isCube();
@@ -106,7 +108,7 @@ std::ostream& operator<<(std::ostream& os,
 namespace std {
     template<int DIMS>
     struct hash<CellId<DIMS> >: public unary_function<CellId<DIMS>, size_t> {
-        hash<PointBase<DIMS> > subHash;
+        const hash<PointBase<DIMS> > subHash;
         size_t operator()(const CellId<DIMS>& id) const {
             size_t ret = 0;
             const size_t PRIME = 920419823;

@@ -17,13 +17,13 @@ using namespace std;
 
 int main(int argc, const char * argv[]) {
     // insert code here...
-
+    std::hash<PointBase<2> > dupa;
 
     auto cs = CellSpace<2>();
     cs.initWithOneCell(4);
-//    cs.splitTo(CellId<2>::unit().move(0,7).move(1,7));
-    buildSingularity(cs,0);
-    cs.enforceTauRule();
+    cs.splitTo(CellId<2>::unit().move(0,7).move(1,7));
+//    buildSingularity(cs,0);
+    enforceTauRule(cs);
     CellDrawer<2> cd(cs.getBounds(),50);
 //    cd.draw(cid.getChildId(3));
 //    cd.draw(cid.getChildId(3).getChildId(3).getAlignedParent());

@@ -71,9 +71,9 @@ public:
     
     
     void draw(const CellSpace<2> & cs) {
-        for(auto & cellptr : cs.getCells()) {
+        for(auto & cell : cs.getLeaves()) {
 //            std::cout << '"' << typeid(cell).name() << '"' <<std::endl;
-            draw(cellptr->getId());
+            draw(cell.getId());
         }
     }
     

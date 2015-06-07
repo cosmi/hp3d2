@@ -211,6 +211,10 @@ public:
         }
         return cnt;
     }
+    dim_t getSide() const {
+        assert(isCube());
+        return PointBase::dims[0];
+    }
     
     static PointDifference cube(dim_t size) {
         return PointDifference(size);
@@ -264,7 +268,9 @@ std::ostream& operator<<(std::ostream& os,
 namespace std {
     template<int DIMS>
     struct hash<PointBase<DIMS> >: public unary_function<PointBase<DIMS>, size_t> {
-        hash<dim_t> subHash;
+        const hash<dim_t> subHash;
+        
+        hash():subHash(){}
         size_t operator()(const PointBase<DIMS>& pb) const {
             size_t ret = 0;
             const size_t PRIME = 961748941;

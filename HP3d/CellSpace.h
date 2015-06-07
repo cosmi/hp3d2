@@ -18,6 +18,16 @@
 #include "Cell.h"
 
 #include <boost/range/adaptor/map.hpp>
+#include <boost/range/adaptor/filtered.hpp>
+#include <boost/range/adaptor/indirected.hpp>
+
+
+template <class CellType>
+struct LeafFilter {
+    bool operator()(const CellType& ct) const {
+        return ct.isLeaf();
+    }
+};
 
 template<int DIMS, class Cell = ::Cell<DIMS> >
 class CellSpace {
@@ -47,8 +57,22 @@ public:
         dict[cell->getId()] = cell;
     }
     
-    auto getCells() const {
-        return dict | boost::adaptors::map_values;
+    const auto getCells() const {
+        using namespace boost::adaptors;
+        return dict | map_values | indirected;
+    }
+    size_t countCells() const {
+        return dict.size();
+    }
+    
+    const auto getLeaves() const {
+         using namespace boost::adaptors;
+        return getCells() | filtered(LeafFilter<CellType>());
+    }
+    
+    const boost::select_first_range<std::unordered_map<CellId, Cell*> > getIds() const {
+        using namespace boost::adaptors;
+        return dict | map_keys;
     }
     
     void split(const CellId& id) {
@@ -89,26 +113,7 @@ public:
         return false;
     }
     
-    void enforceTauRule(const CellId & id) {
-        splitTo(id);
-        FOR(dim, DIMS) {
-            auto p1 = id.move(dim, -1);
-            if(covers(p1)) enforceTauRule(p1.getAlignedParent());
-            auto p2 = id.move(dim, +1);
-            if(covers(p2)) enforceTauRule(p2.getAlignedParent());
-        }
-    }
     
-    void enforceTauRule() {
-        std::vector<CellId> v;
-        v.reserve(dict.size());
-        for(auto & i : dict) {
-            v.push_back(i.first);
-        }
-        for(auto & i : v) {
-            enforceTauRule(i);
-        }
-    }
 };
 
 
