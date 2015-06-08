@@ -166,7 +166,10 @@ public:
     PointDifference(const Point & p, const Point & q):PointBase(q) {
         FOR(i, DIMS) this->dims[i] -= p[i];
     }
-    
+    bool operator==(const PointDifference& pd) const {
+        FOR(i, DIMS) if(this->dims[i] != pd[i]) return false;
+        return true;
+    }
     PointDifference operator-() const{
         PointDifference pd;
         FOR(i, DIMS) {

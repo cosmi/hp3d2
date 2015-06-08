@@ -70,11 +70,11 @@ public:
     }
     
     CellType& getCell(const CellId& cid) {
-        return *dict.find(cid);
+        return *dict.find(cid)->second;
     }
     
     const CellType& getCell(const CellId& cid) const {
-        return *dict.find(cid);
+        return *dict.find(cid)->second;
     }
     const bool hasCell(const CellId& cid) const {
         return dict.count(cid) > 0;
@@ -96,6 +96,13 @@ public:
         }
         return cl;
     }
+//    std::list<const CellType*> getCoveredLeaves(const CellId& cid) const {
+//        std::list<const CellType*> cl;
+//        for(auto cellptr : roots) {
+//            cl.splice(cl.end(), cellptr->getCoveredLeaves(cid));
+//        }
+//        return cl;
+//    }
 
     
     size_t countCells() const {

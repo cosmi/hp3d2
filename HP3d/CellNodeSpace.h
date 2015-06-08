@@ -61,6 +61,11 @@ public:
     
     IdSet constrainedNodes;
     IdSet freeNodes;
+    
+    using NodeToCellsMap = std::unordered_map<CellId, IdList>;
+    
+    NodeToCellsMap nodeCells;
+    
 public:
     bool isConstrainedNode(const CellId& node) {
         auto bounds = CellSpace::getBounds();
@@ -70,12 +75,12 @@ public:
         
         size_t dimensionality = node.countNonZeroDims();
         
-        using namespace std;
-        
-        cout << " NODE: " << node << endl;
-        for(auto& cellptr : cells) {
-            cout << " -> " << cellptr->getId() << endl;
-        }
+//        using namespace std;
+//        
+//        cout << " NODE: " << node << endl;
+//        for(auto& cellptr : cells) {
+//            cout << " -> " << cellptr->getId() << endl;
+//        }
         
         assert(cells.size() <= (1<<(DIMS - dimensionality - boundDimsCount)));
         
@@ -93,19 +98,23 @@ public:
         return matchingNodeCount != cells.size();
     }
     
-    CellList getCoveredCells(const CellId& node) {
+    IdList getCoveredCells(const CellId& node) const {
+        
+//        using namespace std;
         // this is the count of non-zero dimensions of our node
         size_t nodeDims = node.getDimensionality();
         
         if(nodeDims == DIMS) {
             // THIS IS A SPECIAL CASE! Just return matching node
-            return CellList(1, &getCell(node));
+            assert(this->hasCell(node));
+            return IdList(1, node);
         }
+//        cout << "=== NODE: " << node << endl;
         
         // find all candidate cells that touch our node
         // there will be some overhead, esp. for high-dimensionality nodes
         // we could improve that, but it doesn't really matter
-        auto touchingCells = getTouchingLeaves(node);
+        auto touchingCells = this->getTouchingLeaves(node);
         IdSet touchingSides;
         
         for(auto& cellptr : touchingCells) {
@@ -115,6 +124,11 @@ public:
             auto sides = id.getLowerDimensionalityIds();
             for(auto& side: sides) {
                 auto isct = CellId::intersection(node, side);
+                if(!isct.isValid()) {
+                    // this side is not even touching the node
+                    continue;
+                }
+                
                 size_t dims = isct.getDimensionality();
                 assert(dims <= nodeDims); //sanity check, intersection cannot have more dims than original node
                 
@@ -131,19 +145,38 @@ public:
                 }
             }
         }
-        CellList ret;
         
+//        auto candidateBounds = CellId::getBounds(touchingSides.begin(), touchingSides.end());
+//        cout << "BOUNDS: " << candidateBounds << endl;
+        IdSet candidateCells;
+        for(auto& side: touchingSides) {
+//            cout << "S: " << side << endl;
+            auto cells = this->getTouchingLeaves(side);
+            for(auto& cellptr: cells) {
+                candidateCells.insert(cellptr->getId());
+            }
+        }
+        
+        
+        IdList ret;
         // select all cells that have a side covered by one of the selected sides
-        for(auto& cellptr : touchingCells) {
+        for(const CellId& cid : candidateCells) {
+//            cout << "CAND: " << cid << endl;
             for(auto& side: touchingSides) {
-                auto isct = CellId::intersection(side, cellptr);
-                if(isct.getDimensionality() == DIMS-1) {
-                    assert(isct == side || isct.getSize()*2 == node.getSize());
-                    ret.insert(cellptr);
+                auto isct = CellId::intersection(side, cid);
+                if(isct.isValid() && isct.getDimensionality() == DIMS-1) {
+//                    cout << "I " << isct << " " << side << " " << cid << endl;
+
+                    assert(isct == side || isct.getSize()*2 == side.getSize());
+                    ret.push_back(cid);
                     break;
                 }
             }
         }
+        
+//        for(auto& cid: ret) {
+//            cout << "C " << cid << endl;
+//        }
         return ret;
     }
     
@@ -167,6 +200,14 @@ public:
             }
         }
         
+        for(auto& node: freeNodes) {
+            nodeCells[node] = getCoveredCells(node);
+        }
+        
+    }
+    
+    const NodeToCellsMap& getNodeToCellsMapping() const {
+        return nodeCells;
     }
 };
 

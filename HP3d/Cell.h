@@ -80,14 +80,29 @@ public:
         if(!isLeaf()) {
             CellList cl;
             for(auto& child: getChildren()) {
-                cl.splice(cl.end(), child.getCoveringCells(cid));
+                cl.splice(cl.end(), child.getTouchingLeaves(cid));
             }
             return cl; // difference here
         } else {
             return CellList(1, this);
         }
     }
-
+//    CellList getCoveredLeaves(const CellId& cid) const {
+//        if(!id.touches(cid)) return CellList();
+//        if(!isLeaf()) {
+//            CellList cl;
+//            for(auto& child: getChildren()) {
+//                cl.splice(cl.end(), child.getCoveredCells(cid));
+//            }
+//            return cl; // difference here
+//        } else {
+//            if(cid.covers(this->getId())) {
+//                return CellList(1, this);
+//            } else {
+//                return CellList();
+//            }
+//        }
+//    }
 };
 
 template<int DIMS>

@@ -21,7 +21,7 @@ int main(int argc, const char * argv[]) {
 
     auto cs = CellNodeSpace<2>();
     cs.initWithOneCell(4);
-    std::cout << cs.getBounds() << " " << cs.getBounds().getHalf() << std::endl;
+//    std::cout << cs.getBounds() << " " << cs.getBounds().getHalf() << std::endl;
 //    cs.splitTo(CellId<2>::unit());
     cs.splitTo(CellId<2>::unit().move(0,7).move(1,7));
 //    buildSingularity(cs,0);
@@ -38,7 +38,7 @@ int main(int argc, const char * argv[]) {
 //    cd.draw(cs);
 //    cd.draw(p2);
 //    cd.save("/Users/cosmi/phd/output.bmp");
-    cd.open();
+    cd.open(false);
     
     return 0;
 }

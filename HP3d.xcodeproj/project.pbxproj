@@ -13,7 +13,7 @@
 		0D8CA8D21B22238C0019560D /* CellDrawer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CA8D01B22238C0019560D /* CellDrawer.cpp */; };
 		0D8CA8D51B223DF40019560D /* Color.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CA8D31B223DF40019560D /* Color.cpp */; };
 		0D8CA8DB1B2246350019560D /* EasyBMP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CA8D91B2246350019560D /* EasyBMP.cpp */; settings = {COMPILER_FLAGS = "-w"; }; };
-		0D8CA8E31B2247530019560D /* EasyBMP_Font.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CA8DD1B2247530019560D /* EasyBMP_Font.cpp */; settings = {COMPILER_FLAGS = "-w"; }; };
+		0D8CA8E31B2247530019560D /* EasyBMP_Font.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CA8DD1B2247530019560D /* EasyBMP_Font.cpp */; };
 		0D8CA8E41B2247530019560D /* EasyBMP_Geometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CA8DF1B2247530019560D /* EasyBMP_Geometry.cpp */; settings = {COMPILER_FLAGS = "-w"; }; };
 		0D8CA8E81B224F1E0019560D /* Cell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CA8E61B224F1E0019560D /* Cell.cpp */; };
 		0D8CA8EB1B230DF00019560D /* CellSpace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CA8E91B230DF00019560D /* CellSpace.cpp */; };

@@ -20,6 +20,7 @@
 #include "EasyBMP.h"
 #include "EasyBMP.h"
 #include "EasyBMP_Geometry.h"
+#include "EasyBMP_Font.h"
 #include "defs.h"
 #include "Point.h"
 #include "CellId.h"
@@ -66,6 +67,22 @@ public:
         int y2 = toX(i.getTo()[1]);
         DrawArc(image, (x1+x2)/2, (y1+y2)/2, radius, 0, 7, c);
     }
+    
+    void printAtMidPoint(const CellId<2>& i, const std::string& s, const Color& c = Colors::BLACK) {
+        int x1 = toX(i.getFrom()[0]);
+        int x2 = toX(i.getTo()[0]);
+        int y1 = toX(i.getFrom()[1]);
+        int y2 = toX(i.getTo()[1]);
+        int x = (x1+x2)/2 + 3;
+        int y = (y1+y2)/2 + 3;
+        if(y > height-10) {
+            y-= 16;
+        }
+        if(x > width-10) {
+            x-= 16;
+        }
+        PrintString(image, s.c_str(),  x, y, 10, c);
+    }
     void draw(const CellId<2>& i, const Color& c1 = Colors::BLUE, const Color& c2 = Colors::GREEN, const Color& c3 = Colors::MAGENTA, int radius = 2) {
         int x1 = toX(i.getFrom()[0]);
         int x2 = toX(i.getTo()[0])-1;
@@ -90,9 +107,15 @@ public:
         }
         for(auto & id : cs.getConstrainedNodes()) {
             drawMidPoint(id, Colors::RED,4 + 2*id.countNonZeroDims());
+            
         }
         for(auto & id : cs.getFreeNodes()) {
             drawMidPoint(id, Colors::GREEN, 4 + 2*id.countNonZeroDims());
+        }
+        
+        for(auto & it : cs.getNodeToCellsMapping()) {
+            printAtMidPoint(it.first, toString(it.second.size()));
+            
         }
     }
 
@@ -106,7 +129,7 @@ public:
         image.WriteToFile(s.c_str());
     }
     
-    void open() {
+    void open(bool removeFile) {
         std::string fname = "/tmp/celldrawer";
         int tsn = (int)time(nullptr);
         std::string ts = toString(tsn);
@@ -114,7 +137,7 @@ public:
         fname+=".bmp";
         save(fname);
         std::system(("open " + fname).c_str());
-        std::system(("sleep 3 && rm " + fname).c_str());
+        if(removeFile) std::system(("sleep 3 && rm " + fname).c_str());
     }
 };
 

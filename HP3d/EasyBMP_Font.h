@@ -26,5 +26,5 @@ int PrintCopyright( BMP& Image, int TopLeftX, int TopLeftY , int Height ,
                   RGBApixel Color );
 int PrintLetter( BMP& Image, char Letter , int TopLeftX, int TopLeftY, int Height , 
                  RGBApixel Color );
-int PrintString( BMP& Image, char* String , int TopLeftX, int TopLeftY , int Height , 
+int PrintString( BMP& Image, const char* String , int TopLeftX, int TopLeftY , int Height ,
                   RGBApixel Color );

@@ -19,7 +19,7 @@
 #include "EasyBMP_Geometry.h"
 #include "EasyBMP_Font.h"
 				  
-int PrintString( BMP& Image, char* String , int TopLeftX, int TopLeftY , int Height , 
+int PrintString( BMP& Image, const char* String , int TopLeftX, int TopLeftY , int Height ,
                   RGBApixel Color )
 {
  int CharNumber = 0;

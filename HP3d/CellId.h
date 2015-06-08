@@ -86,7 +86,7 @@ public:
     }
     bool touches(const CellId& cid) const {
         FOR(i, DIMS) {
-            if(to[i]<cid.getTo()[i] || from[i] > cid.getFrom()[i]) return false;
+            if(to[i]<cid.getFrom()[i] || from[i] > cid.getTo()[i]) return false;
         }
         return true;
     }
