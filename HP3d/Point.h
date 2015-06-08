@@ -9,6 +9,7 @@
 #ifndef __HP3d__Point__
 #define __HP3d__Point__
 #include <algorithm>
+#include <cassert>
 #include <iostream>
 #include <functional>
 
@@ -125,6 +126,20 @@ public:
         }
         return p;
     }
+    Point resetLowestBits(int bits) const {
+        // alias for resetBits
+        return resetBits(bits);
+    }
+    
+    Point resetBitsInMaskedDims(int bits, mask_t dimmask) const {
+        Point p;
+        int mask = ~((1<<bits)-1);
+        FOR(i, DIMS) if(dimmask&(1<<i)){
+            p.dims[i] = PointBaseN::dims[i] & mask;
+        }
+        return p;
+    }
+    
     static Point origin() {
         return Point();
     }
@@ -207,13 +222,30 @@ public:
     }
     size_t getLongestDim() const {
         auto ret = std::max_element(PointBase::dims, PointBase::dims+DIMS) - PointBase::dims;
-        std::cout << "RET " << ret << std::endl;
         return ret;
     }
+//    size_t getLongestBits() const {
+//        dim_t val = PointBase::dims[getLongestDim()];
+//        dim_t cp = 1;
+//        size_t bits = 0;
+//        while(cp < val) {
+//            cp<<=1;
+//            bits++;
+//        }
+//        assert(cp == val);
+//        return bits;
+//    }
     
     int countZeroBits() const {
-        assert(isCube());
-        int p = PointBase::dims[0];
+//        assert(isCube());
+        int p = 0;
+        FOR(i, DIMS) {
+            if(PointBase::dims[i] > 0) {
+                p = PointBase::dims[i];
+                break;
+            }
+        }
+        assert(p>0);
         int cnt = 0;
         while((p&1) == 0) {
             cnt++;
@@ -228,6 +260,16 @@ public:
     
     static PointDifference cube(dim_t size) {
         return PointDifference(size);
+    }
+    
+    PointDifference setNonZeroDimsTo(dim_t value) const {
+        PointDifference pd = *this;
+        FOR(i, DIMS) if(pd[i] > 0) pd.dims[i] = value;
+    }
+    mask_t getNonZeroMask() const {
+        mask_t m = 0;
+        FOR(i, DIMS) if(PointBase::dims[i] > 0) m|=(1<<i);
+        return m;
     }
 };
 

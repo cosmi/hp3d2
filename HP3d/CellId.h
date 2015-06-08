@@ -9,6 +9,7 @@
 #ifndef __HP3d__CellId__
 #define __HP3d__CellId__
 #include <algorithm>
+#include <list>
 #include "defs.h"
 #include "Point.h"
 
@@ -28,7 +29,12 @@ public:
     static CellId null() {
         return CellId(Point::origin(), Point::origin());
     }
-    
+    bool isValid() const {
+        FOR(i, DIMS) {
+            if(from[i] > to[i]) return false;
+        }
+        return true;
+    }
     
     const Point& getFrom() const {
         return from;
@@ -65,12 +71,7 @@ public:
         return CellId(getFrom() + bmpd, pd);
     }
     
-    CellId getAlignedParent() const {
-        auto nsize = getSize()<<1;
-        int bits = nsize.countZeroBits();
-        auto pt = getFrom().resetBits(bits);
-        return CellId(pt, nsize);
-    }
+    
     
     CellId move(int direction, int distance) const {
         auto size = getSize();
@@ -83,7 +84,12 @@ public:
         return getFrom().hasRelation(cid.getFrom(), PointRelation::LESS_OR_EQ)
             && getTo().hasRelation(cid.getTo(), PointRelation::MORE_OR_EQ);
     }
-    
+    bool touches(const CellId& cid) const {
+        FOR(i, DIMS) {
+            if(to[i]<cid.getTo()[i] || from[i] > cid.getFrom()[i]) return false;
+        }
+        return true;
+    }
     
     /* Bounds methods */
  
@@ -121,6 +127,9 @@ public:
         }
         return ret;
     }
+    size_t getDimensionality() const {
+        return countNonZeroDims();
+    }
     
     size_t countDimsOnBounds(const CellId& bounds) const {
         size_t ret = 0;
@@ -152,7 +161,57 @@ public:
         }
     }
     
-
+    using IdList = std::list<CellId>;
+    IdList getLowerDimensionalityIds() const {
+        IdList list;
+        FOR(i, DIMS) if(from[i] != to[i]) {
+            list.push_back(getReducedDimId(i, false));
+            list.push_back(getReducedDimId(i, true));
+        }
+        return list;
+    }
+    
+private:
+    
+    void getSameSizeNeighborsHelper(IdList& list, int dim) const {
+        if(dim == DIMS) {
+            list.push_back(*this);
+        } else {
+            dim_t delta = getSize()[dim];
+            for(int i = -1; i<=1; i++) {
+                move(dim, delta*i).getSameSizeNeighborsHelper(list, dim+1);
+            }
+        }
+    }
+public:
+    
+    IdList getSameSizeNeighbors() const {
+        IdList list;
+        getSameSizeNeighborsHelper(list, 0);
+        return list;
+    }
+    
+    CellId getAlignedAncestor(int bits) const {
+        auto size = getSize();
+        mask_t dimmask = size.getNonZeroMask();
+        auto newpt = from.resetBitsInMaskedDims(bits, dimmask);
+        auto newsize = size.setNonZeroDimsTo(1<<bits);
+        return CellId(newpt, newsize);
+    }
+    
+    CellId getAlignedParent() const {
+        auto size = getSize();
+        auto nsize = size << 1;
+        mask_t dimmask = size.getNonZeroMask();
+        int bits = nsize.countZeroBits();
+        auto pt = getFrom().resetBitsInMaskedDims(bits, dimmask);
+        return CellId(pt, nsize);
+    }
+    
+    static CellId intersection(const CellId& a, const CellId& b)  {
+        return CellId(Point(PointBase::selectMaxDims(a.getFrom(), b.getFrom())),
+                      Point(PointBase::selectMinDims(a.getTo(), b.getTo())));
+    }
 };
 
 

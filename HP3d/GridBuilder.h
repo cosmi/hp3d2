@@ -37,15 +37,25 @@ void buildSingularity(CellSpace<DIMS, Cell>& cs, int dims) {
     buildSingularityHelper(cs, dims, 0, CellId<DIMS>::unit());
 }
 
+
+//TODO: tau rule should be enforced also across corners
 template<int DIMS, class Cell = ::Cell<DIMS> >
 void enforceTauRuleHelper(CellSpace<DIMS, Cell>& cs, const CellId<DIMS> & id) {
     cs.splitTo(id);
-    FOR(dim, DIMS) {
-        auto p1 = id.move(dim, -1);
-        if(cs.covers(p1)) enforceTauRuleHelper(cs, p1.getAlignedParent());
-        auto p2 = id.move(dim, +1);
-        if(cs.covers(p2)) enforceTauRuleHelper(cs, p2.getAlignedParent());
+    auto neighbors = id.getSameSizeNeighbors();
+    for(auto & cid : neighbors) {
+        auto parent = cid.getAlignedParent();
+        if(cs.hasCell(parent)) continue;
+        if(cs.covers(parent)) {
+            enforceTauRuleHelper(cs, parent);
+        }
     }
+//    FOR(dim, DIMS) {
+//        auto p1 = id.move(dim, -1);
+//        if(cs.covers(p1)) enforceTauRuleHelper(cs, p1.getAlignedParent());
+//        auto p2 = id.move(dim, +1);
+//        if(cs.covers(p2)) enforceTauRuleHelper(cs, p2.getAlignedParent());
+//    }
 }
 template<int DIMS, class Cell = ::Cell<DIMS> >
 void enforceTauRule(CellSpace<DIMS, Cell>& cs) {

@@ -69,8 +69,15 @@ public:
         return dict | map_values | indirected;
     }
     
+    CellType& getCell(const CellId& cid) {
+        return *dict.find(cid);
+    }
+    
     const CellType& getCell(const CellId& cid) const {
         return *dict.find(cid);
+    }
+    const bool hasCell(const CellId& cid) const {
+        return dict.count(cid) > 0;
     }
     
     std::list<const CellType*> getCoveringCells(const CellId& cid) const {
@@ -81,6 +88,15 @@ public:
         }
         return cl;
     }
+    
+    std::list<const CellType*> getTouchingLeaves(const CellId& cid) const {
+        std::list<const CellType*> cl;
+        for(auto cellptr : roots) {
+            cl.splice(cl.end(), cellptr->getTouchingLeaves(cid));
+        }
+        return cl;
+    }
+
     
     size_t countCells() const {
         return dict.size();

@@ -56,6 +56,8 @@ public:
     using CellId = ::CellId<DIMS>;
 
     using IdSet = std::unordered_set<CellId>;
+    using IdList = std::list<CellId>;
+    using CellList = std::list<CellType*>;
     
     IdSet constrainedNodes;
     IdSet freeNodes;
@@ -89,6 +91,60 @@ public:
         }
         assert(leavesCount > 0);
         return matchingNodeCount != cells.size();
+    }
+    
+    CellList getCoveredCells(const CellId& node) {
+        // this is the count of non-zero dimensions of our node
+        size_t nodeDims = node.getDimensionality();
+        
+        if(nodeDims == DIMS) {
+            // THIS IS A SPECIAL CASE! Just return matching node
+            return CellList(1, &getCell(node));
+        }
+        
+        // find all candidate cells that touch our node
+        // there will be some overhead, esp. for high-dimensionality nodes
+        // we could improve that, but it doesn't really matter
+        auto touchingCells = getTouchingLeaves(node);
+        IdSet touchingSides;
+        
+        for(auto& cellptr : touchingCells) {
+            auto& cell = *cellptr;
+            auto& id = cell.getId();
+            // this will get all DIMS-1 sides of our cell, ie. for 3D - each face of the cube
+            auto sides = id.getLowerDimensionalityIds();
+            for(auto& side: sides) {
+                auto isct = CellId::intersection(node, side);
+                size_t dims = isct.getDimensionality();
+                assert(dims <= nodeDims); //sanity check, intersection cannot have more dims than original node
+                
+                // if intersection has less dimensions than the node, ignore that side
+                if(dims == nodeDims) {
+                    
+                    // some of the cells found can be 1 step smaller
+                    // thus, the intersection should be exactly the original node or half of it
+                    assert(isct == node || isct.getSize()*2 == node.getSize());
+       
+                    
+                    // all cells containing this side (or part of it) will be covered by the node
+                    touchingSides.insert(side);
+                }
+            }
+        }
+        CellList ret;
+        
+        // select all cells that have a side covered by one of the selected sides
+        for(auto& cellptr : touchingCells) {
+            for(auto& side: touchingSides) {
+                auto isct = CellId::intersection(side, cellptr);
+                if(isct.getDimensionality() == DIMS-1) {
+                    assert(isct == side || isct.getSize()*2 == node.getSize());
+                    ret.insert(cellptr);
+                    break;
+                }
+            }
+        }
+        return ret;
     }
     
     const IdSet& getConstrainedNodes() const {

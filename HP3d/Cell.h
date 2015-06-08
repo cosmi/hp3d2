@@ -75,6 +75,19 @@ public:
         return CellList(1, this);
     }
     
+    CellList getTouchingLeaves(const CellId& cid) const {
+        if(!id.touches(cid)) return CellList();
+        if(!isLeaf()) {
+            CellList cl;
+            for(auto& child: getChildren()) {
+                cl.splice(cl.end(), child.getCoveringCells(cid));
+            }
+            return cl; // difference here
+        } else {
+            return CellList(1, this);
+        }
+    }
+
 };
 
 template<int DIMS>
