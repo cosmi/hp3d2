@@ -100,7 +100,7 @@ public:
     
     IdList getCoveredCells(const CellId& node) const {
         
-//        using namespace std;
+        using namespace std;
         // this is the count of non-zero dimensions of our node
         size_t nodeDims = node.getDimensionality();
         
@@ -137,7 +137,7 @@ public:
                     
                     // some of the cells found can be 1 step smaller
                     // thus, the intersection should be exactly the original node or half of it
-                    assert(isct == node || isct.getSize()*2 == node.getSize());
+//                    assert(isct == node || isct.getSize()*2 == node.getSize());
        
                     
                     // all cells containing this side (or part of it) will be covered by the node
@@ -167,7 +167,7 @@ public:
                 if(isct.isValid() && isct.getDimensionality() == DIMS-1) {
 //                    cout << "I " << isct << " " << side << " " << cid << endl;
 
-                    assert(isct == side || isct.getSize()*2 == side.getSize());
+//                    assert(isct == side || isct.getSize()*2 == side.getSize());
                     ret.push_back(cid);
                     break;
                 }

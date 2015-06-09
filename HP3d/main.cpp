@@ -20,12 +20,13 @@ using namespace std;
 int main(int argc, const char * argv[]) {
 
     auto cs = CellNodeSpace<2>();
-    cs.initWithOneCell(4);
+    cs.initWithOneCell(7);
 //    std::cout << cs.getBounds() << " " << cs.getBounds().getHalf() << std::endl;
 //    cs.splitTo(CellId<2>::unit());
     cs.splitTo(CellId<2>::unit().move(0,7).move(1,7));
+    cs.splitTo(CellId<2>::unit().move(0,23).move(1,23));
 //    buildSingularity(cs,0);
-    enforceTauRule(cs);
+    enforceExtendedTauRule(cs);
     CellDrawer<2> cd(cs.getBounds(),50);
 //    CellIdSet<2> cis(cs);
 //    cd.draw(splitSet(cis, cs.getBounds().getHalf()).first);

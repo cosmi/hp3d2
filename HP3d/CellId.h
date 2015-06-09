@@ -71,6 +71,10 @@ public:
         return CellId(getFrom() + bmpd, pd);
     }
     
+    size_t getChildrenCount() const {
+        return 1<<DIMS;
+    }
+    
     
     
     CellId move(int direction, int distance) const {
@@ -174,12 +178,13 @@ public:
 private:
     
     void getSameSizeNeighborsHelper(IdList& list, int dim) const {
+
         if(dim == DIMS) {
             list.push_back(*this);
         } else {
-            dim_t delta = getSize()[dim];
             for(int i = -1; i<=1; i++) {
-                move(dim, delta*i).getSameSizeNeighborsHelper(list, dim+1);
+                auto id = move(dim, i);
+                id.getSameSizeNeighborsHelper(list, dim+1);
             }
         }
     }

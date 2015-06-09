@@ -31,25 +31,33 @@ struct CellIdComparator: public std::binary_function<CellId<DIMS>, CellId<DIMS>,
 };
 
 template<int DIMS>
-class CellIdSet {
+class CellIdSet : public std::set<CellId<DIMS>, CellIdComparator<DIMS> > {
     using SetType = std::set<CellId<DIMS>, CellIdComparator<DIMS> >;
     using CellId = ::CellId<DIMS>;
-protected:
-    SetType ids;
 public:
-    const SetType& getIds() const {
-        return ids;
+    const CellIdSet& getIds() const {
+        return *this;
     }
     
     bool addId(const CellId& cid) {
-        return ids.insert(cid).second;
+        return insert(cid).second;
     }
     template<class CellType>
     CellIdSet(const CellSpace<DIMS, CellType>& cs) {
         auto leaves = cs.getLeavesIds();
-        ids.insert(leaves.begin(), leaves.end());
+        insert(leaves.begin(), leaves.end());
     }
     CellIdSet(){}
+    
+    using SetPair = std::pair<CellIdSet, CellIdSet>;
+    template <class Filter>
+    SetPair splitBy(Filter& filter = Filter()) {
+        SetPair ret;
+        for(auto & cid: *this) {
+            (filter(cid)?ret.first:ret.second).addId(cid);
+        }
+        return ret;
+    }
 };
 
 namespace std {

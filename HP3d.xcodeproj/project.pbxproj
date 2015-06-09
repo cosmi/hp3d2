@@ -8,20 +8,18 @@
 
 /* Begin PBXBuildFile section */
 		0D8CA8C21B220E180019560D /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CA8C11B220E180019560D /* main.cpp */; };
-		0D8CA8CA1B220EB30019560D /* CellId.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CA8C81B220EB30019560D /* CellId.cpp */; };
-		0D8CA8CE1B2211C60019560D /* Point.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CA8CC1B2211C60019560D /* Point.cpp */; };
 		0D8CA8D21B22238C0019560D /* CellDrawer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CA8D01B22238C0019560D /* CellDrawer.cpp */; };
-		0D8CA8D51B223DF40019560D /* Color.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CA8D31B223DF40019560D /* Color.cpp */; };
 		0D8CA8DB1B2246350019560D /* EasyBMP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CA8D91B2246350019560D /* EasyBMP.cpp */; settings = {COMPILER_FLAGS = "-w"; }; };
 		0D8CA8E31B2247530019560D /* EasyBMP_Font.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CA8DD1B2247530019560D /* EasyBMP_Font.cpp */; };
 		0D8CA8E41B2247530019560D /* EasyBMP_Geometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CA8DF1B2247530019560D /* EasyBMP_Geometry.cpp */; settings = {COMPILER_FLAGS = "-w"; }; };
 		0D8CA8E81B224F1E0019560D /* Cell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CA8E61B224F1E0019560D /* Cell.cpp */; };
 		0D8CA8EB1B230DF00019560D /* CellSpace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CA8E91B230DF00019560D /* CellSpace.cpp */; };
 		0DB5E1EF1B2346DA004E5FAE /* GridBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DB5E1ED1B2346DA004E5FAE /* GridBuilder.cpp */; };
-		0DB5E1F21B237E96004E5FAE /* CellIdSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DB5E1F01B237E96004E5FAE /* CellIdSet.cpp */; };
 		0DB5E1F51B24699D004E5FAE /* CellSeparators.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DB5E1F31B24699D004E5FAE /* CellSeparators.cpp */; };
 		0DB5E1F81B247206004E5FAE /* CellTreeOptimizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DB5E1F61B247206004E5FAE /* CellTreeOptimizer.cpp */; };
 		0DB5E1FB1B247458004E5FAE /* CellNodeSpace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DB5E1F91B247458004E5FAE /* CellNodeSpace.cpp */; };
+		0DD103991B277CF9000474F2 /* CostFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DD103971B277CF9000474F2 /* CostFunction.cpp */; };
+		0DD1039C1B277D92000474F2 /* DivisionStrategy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DD1039A1B277D91000474F2 /* DivisionStrategy.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -39,14 +37,11 @@
 /* Begin PBXFileReference section */
 		0D8CA8BE1B220E180019560D /* HP3d */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = HP3d; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D8CA8C11B220E180019560D /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		0D8CA8C81B220EB30019560D /* CellId.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CellId.cpp; sourceTree = "<group>"; };
 		0D8CA8C91B220EB30019560D /* CellId.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellId.h; sourceTree = "<group>"; };
 		0D8CA8CB1B2210750019560D /* defs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = defs.h; sourceTree = "<group>"; };
-		0D8CA8CC1B2211C60019560D /* Point.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Point.cpp; sourceTree = "<group>"; };
 		0D8CA8CD1B2211C60019560D /* Point.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Point.h; sourceTree = "<group>"; };
 		0D8CA8D01B22238C0019560D /* CellDrawer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CellDrawer.cpp; sourceTree = "<group>"; };
 		0D8CA8D11B22238C0019560D /* CellDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellDrawer.h; sourceTree = "<group>"; };
-		0D8CA8D31B223DF40019560D /* Color.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Color.cpp; sourceTree = "<group>"; };
 		0D8CA8D41B223DF40019560D /* Color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Color.h; sourceTree = "<group>"; };
 		0D8CA8D61B2246350019560D /* EasyBMP_BMP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EasyBMP_BMP.h; sourceTree = "<group>"; };
 		0D8CA8D71B2246350019560D /* EasyBMP_DataStructures.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EasyBMP_DataStructures.h; sourceTree = "<group>"; };
@@ -63,7 +58,6 @@
 		0D8CA8EA1B230DF00019560D /* CellSpace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellSpace.h; sourceTree = "<group>"; };
 		0DB5E1ED1B2346DA004E5FAE /* GridBuilder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GridBuilder.cpp; sourceTree = "<group>"; };
 		0DB5E1EE1B2346DA004E5FAE /* GridBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridBuilder.h; sourceTree = "<group>"; };
-		0DB5E1F01B237E96004E5FAE /* CellIdSet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CellIdSet.cpp; sourceTree = "<group>"; };
 		0DB5E1F11B237E96004E5FAE /* CellIdSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellIdSet.h; sourceTree = "<group>"; };
 		0DB5E1F31B24699D004E5FAE /* CellSeparators.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CellSeparators.cpp; sourceTree = "<group>"; };
 		0DB5E1F41B24699D004E5FAE /* CellSeparators.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellSeparators.h; sourceTree = "<group>"; };
@@ -71,6 +65,10 @@
 		0DB5E1F71B247206004E5FAE /* CellTreeOptimizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellTreeOptimizer.h; sourceTree = "<group>"; };
 		0DB5E1F91B247458004E5FAE /* CellNodeSpace.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CellNodeSpace.cpp; sourceTree = "<group>"; };
 		0DB5E1FA1B247458004E5FAE /* CellNodeSpace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellNodeSpace.h; sourceTree = "<group>"; };
+		0DD103971B277CF9000474F2 /* CostFunction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CostFunction.cpp; sourceTree = "<group>"; };
+		0DD103981B277CF9000474F2 /* CostFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CostFunction.h; sourceTree = "<group>"; };
+		0DD1039A1B277D91000474F2 /* DivisionStrategy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DivisionStrategy.cpp; sourceTree = "<group>"; };
+		0DD1039B1B277D91000474F2 /* DivisionStrategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DivisionStrategy.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,14 +103,11 @@
 			children = (
 				0D8CA8DC1B2246510019560D /* EasyBMP */,
 				0D8CA8C11B220E180019560D /* main.cpp */,
-				0D8CA8C81B220EB30019560D /* CellId.cpp */,
 				0D8CA8C91B220EB30019560D /* CellId.h */,
 				0D8CA8CB1B2210750019560D /* defs.h */,
-				0D8CA8CC1B2211C60019560D /* Point.cpp */,
 				0D8CA8CD1B2211C60019560D /* Point.h */,
 				0D8CA8D01B22238C0019560D /* CellDrawer.cpp */,
 				0D8CA8D11B22238C0019560D /* CellDrawer.h */,
-				0D8CA8D31B223DF40019560D /* Color.cpp */,
 				0D8CA8D41B223DF40019560D /* Color.h */,
 				0D8CA8E61B224F1E0019560D /* Cell.cpp */,
 				0D8CA8E71B224F1E0019560D /* Cell.h */,
@@ -120,7 +115,6 @@
 				0D8CA8EA1B230DF00019560D /* CellSpace.h */,
 				0DB5E1ED1B2346DA004E5FAE /* GridBuilder.cpp */,
 				0DB5E1EE1B2346DA004E5FAE /* GridBuilder.h */,
-				0DB5E1F01B237E96004E5FAE /* CellIdSet.cpp */,
 				0DB5E1F11B237E96004E5FAE /* CellIdSet.h */,
 				0DB5E1F31B24699D004E5FAE /* CellSeparators.cpp */,
 				0DB5E1F41B24699D004E5FAE /* CellSeparators.h */,
@@ -128,6 +122,10 @@
 				0DB5E1F71B247206004E5FAE /* CellTreeOptimizer.h */,
 				0DB5E1F91B247458004E5FAE /* CellNodeSpace.cpp */,
 				0DB5E1FA1B247458004E5FAE /* CellNodeSpace.h */,
+				0DD103971B277CF9000474F2 /* CostFunction.cpp */,
+				0DD103981B277CF9000474F2 /* CostFunction.h */,
+				0DD1039A1B277D91000474F2 /* DivisionStrategy.cpp */,
+				0DD1039B1B277D91000474F2 /* DivisionStrategy.h */,
 			);
 			path = HP3d;
 			sourceTree = "<group>";
@@ -208,17 +206,15 @@
 				0DB5E1EF1B2346DA004E5FAE /* GridBuilder.cpp in Sources */,
 				0D8CA8E81B224F1E0019560D /* Cell.cpp in Sources */,
 				0D8CA8D21B22238C0019560D /* CellDrawer.cpp in Sources */,
+				0DD103991B277CF9000474F2 /* CostFunction.cpp in Sources */,
 				0D8CA8E41B2247530019560D /* EasyBMP_Geometry.cpp in Sources */,
 				0DB5E1FB1B247458004E5FAE /* CellNodeSpace.cpp in Sources */,
 				0DB5E1F81B247206004E5FAE /* CellTreeOptimizer.cpp in Sources */,
-				0D8CA8CE1B2211C60019560D /* Point.cpp in Sources */,
-				0D8CA8D51B223DF40019560D /* Color.cpp in Sources */,
 				0D8CA8DB1B2246350019560D /* EasyBMP.cpp in Sources */,
 				0D8CA8E31B2247530019560D /* EasyBMP_Font.cpp in Sources */,
-				0D8CA8CA1B220EB30019560D /* CellId.cpp in Sources */,
 				0D8CA8EB1B230DF00019560D /* CellSpace.cpp in Sources */,
 				0D8CA8C21B220E180019560D /* main.cpp in Sources */,
-				0DB5E1F21B237E96004E5FAE /* CellIdSet.cpp in Sources */,
+				0DD1039C1B277D92000474F2 /* DivisionStrategy.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

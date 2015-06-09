@@ -40,31 +40,59 @@ void buildSingularity(CellSpace<DIMS, Cell>& cs, int dims) {
 
 //TODO: tau rule should be enforced also across corners
 template<int DIMS, class Cell = ::Cell<DIMS> >
-void enforceTauRuleHelper(CellSpace<DIMS, Cell>& cs, const CellId<DIMS> & id) {
-    cs.splitTo(id);
+void enforceExtendedTauRuleHelper(CellSpace<DIMS, Cell>& cs, const CellId<DIMS> & id) {
+    if(!cs.hasCell(id)){
+        auto parent = id.getAlignedParent();
+        enforceExtendedTauRuleHelper(cs, parent);
+        cs.splitTo(id);
+        FOR(i, id.getChildrenCount()) {
+            auto cid = parent.getChild(i);
+            if(cid == id) continue;
+            enforceExtendedTauRuleHelper(cs, cid);
+        }
+    }
+
+
+//            std::cout << "NOOODE " << id << std::endl;
+//    if(id.getTo() == Point<DIMS>({8,8}) && id.getSide() == 2) {
+//
+//    }
     auto neighbors = id.getSameSizeNeighbors();
+    int q = 1;
+    FOR(i, DIMS) q*=3;
+    assert(neighbors.size() == q);
+    
+    auto bounds = CellId<DIMS>::getBounds(neighbors.begin(), neighbors.end());
+    using namespace std;
+    cout << "FOR " << id << endl;
+//    for(auto cid : neighbors) cout << "> " << cid << endl;
+    assert(id.getSize()*3 == bounds.getSize());
+    
     for(auto & cid : neighbors) {
         auto parent = cid.getAlignedParent();
+        
+        cout << "P: " << parent << " C: " << cid << endl;
         if(cs.hasCell(parent)) continue;
         if(cs.covers(parent)) {
-            enforceTauRuleHelper(cs, parent);
+            enforceExtendedTauRuleHelper(cs, parent);
         }
     }
 //    FOR(dim, DIMS) {
 //        auto p1 = id.move(dim, -1);
-//        if(cs.covers(p1)) enforceTauRuleHelper(cs, p1.getAlignedParent());
+//        if(cs.covers(p1)) enforceExtendedTauRuleHelper(cs, p1.getAlignedParent());
 //        auto p2 = id.move(dim, +1);
-//        if(cs.covers(p2)) enforceTauRuleHelper(cs, p2.getAlignedParent());
+//        if(cs.covers(p2)) enforceExtendedTauRuleHelper(cs, p2.getAlignedParent());
 //    }
 }
 template<int DIMS, class Cell = ::Cell<DIMS> >
-void enforceTauRule(CellSpace<DIMS, Cell>& cs) {
+void enforceExtendedTauRule(CellSpace<DIMS, Cell>& cs) {
     std::vector<CellId<DIMS> > v;
     v.reserve(cs.countCells());
-    const auto& ids = cs.getIds();
+    const auto& ids = cs.getLeavesIds();
     v.insert(v.begin(), ids.begin(), ids.end());
     for(auto & i : v) {
-        enforceTauRuleHelper(cs, i);
+        enforceExtendedTauRuleHelper(cs, i);
+        std:: cout << "==========" << std::endl;
     }
 }
 
