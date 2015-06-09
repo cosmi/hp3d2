@@ -56,15 +56,17 @@ public:
     using CellId = ::CellId<DIMS>;
 
     using IdSet = std::unordered_set<CellId>;
-    using IdList = std::list<CellId>;
-    using CellList = std::list<CellType*>;
+    using IdList = std::vector<CellId>;
+    using CellList = std::vector<CellType*>;
     
     IdSet constrainedNodes;
     IdSet freeNodes;
     
     using NodeToCellsMap = std::unordered_map<CellId, IdList>;
+    using CellToNodesMap = NodeToCellsMap;
     
     NodeToCellsMap nodeCells;
+    CellToNodesMap cellNodes;
     
 public:
     bool isConstrainedNode(const CellId& node) {
@@ -201,13 +203,37 @@ public:
         }
         
         for(auto& node: freeNodes) {
-            nodeCells[node] = getCoveredCells(node);
+            auto cells = getCoveredCells(node);
+            nodeCells[node] = cells;
+            for(auto& cell: cells) {
+                cellNodes[cell].push_back(node);
+            }
         }
         
     }
     
     const NodeToCellsMap& getNodeToCellsMapping() const {
         return nodeCells;
+    }
+    const CellToNodesMap& getCellToNodesMapping() const {
+        return cellNodes;
+    }
+    
+    size_t countNodesForCell(const CellId& cid) const {
+        auto it = cellNodes.find(cid);
+        if(it == cellNodes.end()) return 0;
+        else return it->second.size();
+    }
+    size_t countCellsForNode(const CellId& cid) const {
+        auto it = nodeCells.find(cid);
+        if(it == nodeCells.end()) return 0;
+        else return it->second.size();
+    }
+    
+    const typename CellToNodesMap::mapped_type& getNodesForCell(const CellId& cid) const {
+        auto it = cellNodes.find(cid);
+        assert(it != cellNodes.end());
+        return it->second;
     }
 };
 

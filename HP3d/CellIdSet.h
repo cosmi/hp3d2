@@ -40,18 +40,15 @@ public:
     }
     
     bool addId(const CellId& cid) {
-        return insert(cid).second;
+        return this->insert(cid).second;
     }
-    template<class CellType>
-    CellIdSet(const CellSpace<DIMS, CellType>& cs) {
-        auto leaves = cs.getLeavesIds();
-        insert(leaves.begin(), leaves.end());
-    }
+    template<class Iterator>
+    CellIdSet(const Iterator& a, const Iterator& b): SetType(a, b) {}
     CellIdSet(){}
     
     using SetPair = std::pair<CellIdSet, CellIdSet>;
     template <class Filter>
-    SetPair splitBy(Filter& filter = Filter()) {
+    SetPair splitBy(const Filter& filter = Filter()) const {
         SetPair ret;
         for(auto & cid: *this) {
             (filter(cid)?ret.first:ret.second).addId(cid);

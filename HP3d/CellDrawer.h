@@ -34,15 +34,16 @@ class CellDrawer;
 #include <typeinfo>
 template<>
 class CellDrawer<2> {
-    int x1, x2, y1, y2, scale, width, height;
+    dim_t x1, x2, y1, y2;
+    int scale, width, height;
     BMP image;
 
     CellDrawer<2>(const CellDrawer& that) = delete;
 public:
-    CellDrawer(int x1, int x2, int y1, int y2, int scale) :
+    CellDrawer(dim_t x1, dim_t x2, dim_t y1, dim_t y2, int scale) :
     x1(x1), x2(x2), y1(y1), y2(y2),
-    width(scale*(x2-x1)+1),
-    height(scale*(y2-y1)+1),
+    width(scale*int(x2-x1)+1),
+    height(scale*int(y2-y1)+1),
     scale(scale){
         image.SetSize(width, height);
         image.SetBitDepth(24);
@@ -51,11 +52,11 @@ public:
         :CellDrawer(bounds.getFrom()[0], bounds.getTo()[0], bounds.getFrom()[1], bounds.getTo()[1], scale) {
     }
     
-    int toX(int p) {
-        return (p-x1)*scale;
+    int toX(dim_t p) {
+        return (int)(p-x1)*scale;
     }
-    int toY(int p) {
-        return (p-y1)*scale;
+    int toY(dim_t p) {
+        return (int)(p-y1)*scale;
     }
     void draw(const Point<2>& pt, const Color& c = Colors::RED, int radius = 3) {
         DrawArc(image, toX(pt[0]), toY(pt[1]), radius, 0, 7, c);
@@ -106,11 +107,11 @@ public:
             draw(cell.getId());
         }
         for(auto & id : cs.getConstrainedNodes()) {
-            drawMidPoint(id, Colors::RED,4 + 2*id.countNonZeroDims());
+            drawMidPoint(id, Colors::RED,4 + 2*(int)id.countNonZeroDims());
             
         }
         for(auto & id : cs.getFreeNodes()) {
-            drawMidPoint(id, Colors::GREEN, 4 + 2*id.countNonZeroDims());
+            drawMidPoint(id, Colors::GREEN, 4 + 2*(int)id.countNonZeroDims());
         }
         
         for(auto & it : cs.getNodeToCellsMapping()) {

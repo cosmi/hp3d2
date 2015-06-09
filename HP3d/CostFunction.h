@@ -12,8 +12,8 @@
 #include <cmath>
 #include "defs.h"
 
-struct BasicFlopsFunction {
-    result_t operator()(result_t eliminated, result_t total) {
+struct FlopsFunction {
+    result_t operator()(result_t eliminated, result_t total) const {
         result_t a = eliminated;
         result_t b = total;
         result_t res = (a * (6*b*b - 6*a*b + 6*b + 2*a*a - 3*a + 1))/6;

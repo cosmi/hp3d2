@@ -56,7 +56,7 @@ public:
         auto size = getSize();
         auto & from = getFrom();
         FOR(i, DIMS) {
-            int p = size[i]-1;
+            dim_t p = size[i]-1;
             if(from[i] & p) return false;
         }
         return true;
@@ -116,7 +116,7 @@ public:
     CellId getHalf() const {
         auto size = getSize();
         size_t splittingDim = size.getLongestDim();
-        assert(size[splittingDim]%2 == 0);
+        assert(size[splittingDim]%2 == (dim_t)0);
         auto nsize = PointDifference(size.replaceDim(splittingDim, size[splittingDim]/2));
         return CellId(getFrom(), nsize);
     }
@@ -229,11 +229,11 @@ std::ostream& operator<<(std::ostream& os,
 namespace std {
     template<int DIMS>
     struct hash<CellId<DIMS> >: public unary_function<CellId<DIMS>, size_t> {
-        const hash<PointBase<DIMS> > subHash;
+
         size_t operator()(const CellId<DIMS>& id) const {
             size_t ret = 0;
             const size_t PRIME = 920419823;
-            ret = subHash(id.getFrom()) + PRIME * subHash(id.getTo());
+            ret = id.getFrom().hash() + PRIME * id.getTo().hash();
             return ret;
         }
     };

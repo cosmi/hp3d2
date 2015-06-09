@@ -35,7 +35,7 @@ public:
             dims[i++] = elem;
         }
     }
-    const dim_t& operator[](int dim) const {
+    const dim_t& operator[](size_t dim) const {
         return PointBase::dims[dim];
     }
     
@@ -90,10 +90,21 @@ public:
         }
         return pb;
     }
-    PointBase replaceDim(int dim, dim_t value) const {
+    PointBase replaceDim(size_t dim, dim_t value) const {
         auto pb = *this;
         pb.dims[dim] = value;
         return pb;
+    }
+    
+    size_t hash() const {
+        static const std::hash<dim_t> subHash = std::hash<dim_t>();
+        size_t ret = 0;
+        const size_t PRIME = 961748941;
+        FOR(i, DIMS) {
+            ret *= PRIME;
+            ret += subHash(dims[i]);
+        }
+        return ret;
     }
 };
 
@@ -186,7 +197,7 @@ public:
         }
         return pd;
     }
-    PointDifference operator*(const int& by) const {
+    PointDifference operator*(const dim_t& by) const {
         PointDifference pd;
         FOR(i, DIMS) {
             pd.dims[i] = (*this)[i]*by;
@@ -216,7 +227,7 @@ public:
         return pd;
     }
     bool isCube() const {
-        int p = PointBase::dims[0];
+        dim_t p = PointBase::dims[0];
         if(p == 0) return false;
         FOR(i, DIMS) {
             if(p != PointBase::dims[i]) return false;
@@ -241,7 +252,7 @@ public:
     
     int countZeroBits() const {
 //        assert(isCube());
-        int p = 0;
+        dim_t p = 0;
         FOR(i, DIMS) {
             if(PointBase::dims[i] > 0) {
                 p = PointBase::dims[i];
@@ -320,6 +331,8 @@ std::ostream& operator<<(std::ostream& os,
     return os;
 }
 
+
+
 namespace std {
     template<int DIMS>
     struct hash<PointBase<DIMS> >: public unary_function<PointBase<DIMS>, size_t> {
@@ -327,13 +340,7 @@ namespace std {
         
         hash():subHash(){}
         size_t operator()(const PointBase<DIMS>& pb) const {
-            size_t ret = 0;
-            const size_t PRIME = 961748941;
-            FOR(i, DIMS) {
-                ret *= PRIME;
-                ret += subHash(pb[i]);
-            }
-            return ret;
+            return pb.hash();
         }
     };
 }
