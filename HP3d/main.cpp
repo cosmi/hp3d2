@@ -20,34 +20,31 @@
 using namespace std;
 
 int main(int argc, const char * argv[]) {
+    const int DIMS = 4;
+    
     using namespace std;
-    auto cs = CellNodeSpace<2>();
-    cs.initWithOneCell(5);
+    auto cs = CellNodeSpace<DIMS>();
+    cs.initWithOneCell(4);
 //    std::cout << cs.getBounds() << " " << cs.getBounds().getHalf() << std::endl;
-    cs.splitTo(CellId<2>::unit());
+//    cs.splitTo(CellId<DIMS>::unit());
 //    cs.splitTo(CellId<2>::unit().move(0,7).move(1,7));
 //    cs.splitTo(CellId<2>::unit().move(0,23).move(1,23));
-//    buildSingularity(cs,0);
+    buildSingularity(cs,2);
     enforceExtendedTauRule(cs);
-    CellDrawer<2> cd(cs.getBounds(),50);
+
 //    CellIdSet<2> cis(cs);
 //    cd.draw(splitSet(cis, cs.getBounds().getHalf()).first);
     cs.initNodes();
-    cd.draw(cs);
-//    cd.draw(cid.getChildId(3));
-//    cd.draw(cid.getChildId(3).getChildId(3).getAlignedParent());
-//    cd.draw(cid.getChild(2));
-//    cd.draw(cid.getChild(2).move(0, 2).move(1,1).getChild(0));
+
+//    CellDrawer<DIMS> cd(cs.getBounds(),50);
 //    cd.draw(cs);
-//    cd.draw(p2);
-//    cd.save("/Users/cosmi/phd/output.bmp");
-    cd.open(false);
+//    cd.open(false);
     
     
-    NestedDissectionStrategy<2, FlopsFunction> strat(cs);
-    auto ret = strat.AbstractStrategy<2, FlopsFunction>::calculateStrategy();
-    cout << "RES " << ret->getCost() << endl;
+    NestedDissectionStrategy<DIMS, FlopsFunction> strat(cs);
+    auto ret = strat.AbstractStrategy<DIMS, FlopsFunction>::calculateStrategy();
+    
     ret->printToStream(cout);
-    
+    cout << "RES " << ret->getCost() << endl;
     return 0;
 }

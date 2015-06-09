@@ -71,7 +71,7 @@ public:
         return CellId(getFrom() + bmpd, pd);
     }
     
-    size_t getChildrenCount() const {
+    constexpr size_t getChildrenCount() const {
         return 1<<DIMS;
     }
     

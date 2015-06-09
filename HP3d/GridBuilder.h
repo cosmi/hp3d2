@@ -64,14 +64,14 @@ void enforceExtendedTauRuleHelper(CellSpace<DIMS, Cell>& cs, const CellId<DIMS> 
     
     auto bounds = CellId<DIMS>::getBounds(neighbors.begin(), neighbors.end());
     using namespace std;
-    cout << "FOR " << id << endl;
+//    cout << "FOR " << id << endl;
 //    for(auto cid : neighbors) cout << "> " << cid << endl;
     assert(id.getSize()*3 == bounds.getSize());
     
     for(auto & cid : neighbors) {
         auto parent = cid.getAlignedParent();
         
-        cout << "P: " << parent << " C: " << cid << endl;
+//        cout << "P: " << parent << " C: " << cid << endl;
         if(cs.hasCell(parent)) continue;
         if(cs.covers(parent)) {
             enforceExtendedTauRuleHelper(cs, parent);
@@ -92,7 +92,7 @@ void enforceExtendedTauRule(CellSpace<DIMS, Cell>& cs) {
     v.insert(v.begin(), ids.begin(), ids.end());
     for(auto & i : v) {
         enforceExtendedTauRuleHelper(cs, i);
-        std:: cout << "==========" << std::endl;
+//        std:: cout << "==========" << std::endl;
     }
 }
 

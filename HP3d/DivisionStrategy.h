@@ -15,6 +15,7 @@
 #include "CellIdSet.h"
 #include "Cell.h"
 #include "CellNodeSpace.h"
+#include "CellSeparators.h"
 
 
 template<int DIMS>
@@ -58,15 +59,6 @@ public:
     }
 };
 
-
-template<int DIMS>
-struct CellIdInBounds {
-    CellId<DIMS> bounds;
-    CellIdInBounds(const CellId<DIMS>& bounds):bounds(bounds){}
-    bool operator()(const CellId<DIMS>& cell) const {
-        return bounds.covers(cell);
-    }
-};
 
 
 template<int DIMS, class CostFunction, class CellType = Cell<DIMS>, class CellSpace = CellNodeSpace<DIMS, CellType> >
@@ -160,7 +152,7 @@ public:
             auto bounds = CellId::getBounds(ids.getIds().begin(), ids.getIds().end());
             auto half = bounds.getHalf();
             
-            auto subsets = ids.splitBy(CellIdInBounds<DIMS>(half));
+            auto subsets = ids.splitBy(InBoundsFilter<DIMS>(half));
             
             auto r1 = calculateStrategy(subsets.first);
             auto r2 = calculateStrategy(subsets.second);
