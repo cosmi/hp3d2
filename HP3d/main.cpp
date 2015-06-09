@@ -20,7 +20,7 @@
 using namespace std;
 
 int main(int argc, const char * argv[]) {
-    const int DIMS = 4;
+    const int DIMS = 3;
     
     using namespace std;
     auto cs = CellNodeSpace<DIMS>();
@@ -41,10 +41,10 @@ int main(int argc, const char * argv[]) {
 //    cd.open(false);
     
     
-    NestedDissectionStrategy<DIMS, FlopsFunction> strat(cs);
-    auto ret = strat.AbstractStrategy<DIMS, FlopsFunction>::calculateStrategy();
+    NestedDivisionStrategy<DIMS> strat(cs);
+    auto ret = strat.AbstractStrategy<DIMS>::calculateStrategy();
     
-    ret->printToStream(cout);
+//    ret->printToStream(cout);
     cout << "RES " << ret->getCost() << endl;
     return 0;
 }

@@ -16,6 +16,7 @@
 #include "Cell.h"
 #include "CellNodeSpace.h"
 #include "CellSeparators.h"
+#include "CostFunction.h"
 
 
 template<int DIMS>
@@ -59,9 +60,7 @@ public:
     }
 };
 
-
-
-template<int DIMS, class CostFunction, class CellType = Cell<DIMS>, class CellSpace = CellNodeSpace<DIMS, CellType> >
+template<int DIMS, class CostFunction = FlopsFunction, class CellType = Cell<DIMS>, class CellSpace = CellNodeSpace<DIMS, CellType> >
 class AbstractStrategy {
 protected:
     const CellSpace& cs;
@@ -115,7 +114,10 @@ protected:
         return cf(reduced, all);
     }
 public:
-    virtual result_pair calculateStrategy(const IdSet&) = 0;
+    virtual result_pair calculateStrategy(const IdSet& ids) {
+        return this->calculateStrategyImpl(ids);
+    };
+    virtual result_pair calculateStrategyImpl(const IdSet& ids) = 0;
     virtual ~AbstractStrategy(){};
     
     virtual result calculateStrategy() {
@@ -128,11 +130,15 @@ public:
     
 };
 
-template<int DIMS, class CostFunction, class CellType = Cell<DIMS>, class CellSpace = CellNodeSpace<DIMS, CellType> >
-class NestedDissectionStrategy : public AbstractStrategy<DIMS, CostFunction, CellType, CellSpace> {
-public:
+template<int DIMS,
+         class DivisionFunction = NestedDissectionSeparator<DIMS>,
+         class CostFunction = FlopsFunction,
+         class CellType = Cell<DIMS>,
+         class CellSpace = CellNodeSpace<DIMS, CellType> >
+class NestedDivisionStrategy : public AbstractStrategy<DIMS, CostFunction, CellType, CellSpace> {
+    protected:
     using Strategy = ::AbstractStrategy<DIMS, CostFunction, CellType, CellSpace> ;
-    NestedDissectionStrategy(const CellSpace& cs, const CostFunction& cf = CostFunction() ):Strategy(cs, cf) {}
+    DivisionFunction divider;
     
     using DivisionTree = typename Strategy::DivisionTree;
     using CellId = ::CellId<DIMS>;
@@ -140,7 +146,7 @@ public:
     using result_pair = typename Strategy::result_pair;
     using IdSet = typename Strategy::IdSet;
     
-    virtual result_pair calculateStrategy(const IdSet& ids) {
+    virtual result_pair calculateStrategyImpl(const IdSet& ids) {
         assert(ids.size() > 0);
         result_pair res;
         result_t innerCost = 0;
@@ -149,13 +155,10 @@ public:
             res = result_pair(DivisionTree::build(ids),
                               this->nodesForSingleCell(cid));
         } else {
-            auto bounds = CellId::getBounds(ids.getIds().begin(), ids.getIds().end());
-            auto half = bounds.getHalf();
+            auto subsets = this->divider(ids);
             
-            auto subsets = ids.splitBy(InBoundsFilter<DIMS>(half));
-            
-            auto r1 = calculateStrategy(subsets.first);
-            auto r2 = calculateStrategy(subsets.second);
+            auto r1 = this->calculateStrategy(subsets.first);
+            auto r2 = this->calculateStrategy(subsets.second);
             
             innerCost += r1.first->getCost() + r2.first->getCost();
             res = result_pair(DivisionTree::build(ids, r1.first, r2.first),
@@ -167,6 +170,13 @@ public:
         
         return res;
     }
+    
+public:
+    NestedDivisionStrategy(const CellSpace& cs,
+                           const DivisionFunction& divider = DivisionFunction(),
+                           const CostFunction& cf = CostFunction())
+    : Strategy(cs, cf), divider(divider) {}
+
 };
 
 #endif /* defined(__HP3d__DivisionStrategy__) */

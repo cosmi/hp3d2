@@ -31,20 +31,31 @@ struct InBoundsFilter {
     }
 };
 
-template <int DIMS>
-std::pair<CellIdSet<DIMS>, CellIdSet<DIMS> > splitSet(const CellIdSet<DIMS>& cs, const CellId<DIMS>& bounds) {
-    std::pair<CellIdSet<DIMS>, CellIdSet<DIMS> > ret;
-    
-    for(auto & id : cs.getIds()) {
-        if(bounds.covers(id)) {
-            ret.first.addId(id);
-        } else {
-            ret.second.addId(id);
-        }
+template<int DIMS>
+struct NestedDissectionSeparator {
+    using IdSet = CellIdSet<DIMS>;
+    std::pair<IdSet, IdSet> operator()(const IdSet& ids) const {
+        auto bounds = CellId<DIMS>::getBounds(ids.begin(), ids.end());
+        auto half = bounds.getHalf();
+        return ids.splitBy(InBoundsFilter<DIMS>(half));
     }
-    
-    return ret;
-}
+};
+//
+//
+//template <int DIMS>
+//std::pair<CellIdSet<DIMS>, CellIdSet<DIMS> > splitSet(const CellIdSet<DIMS>& cs, const CellId<DIMS>& bounds) {
+//    std::pair<CellIdSet<DIMS>, CellIdSet<DIMS> > ret;
+//    
+//    for(auto & id : cs.getIds()) {
+//        if(bounds.covers(id)) {
+//            ret.first.addId(id);
+//        } else {
+//            ret.second.addId(id);
+//        }
+//    }
+//    
+//    return ret;
+//}
 
 
 #endif /* defined(__HP3d__CellSeparators__) */

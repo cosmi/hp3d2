@@ -57,6 +57,22 @@ public:
     }
 };
 
+
+template <int DIMS>
+std::ostream& operator<<(std::ostream& os,
+                         const CellIdSet<DIMS>& ids) {
+    os << '{';
+    bool first = true;
+    for(auto & id : ids) {
+        if(!first) os << ", ";
+        first = false;
+        os << id;
+    }
+    os << '}';
+    return os;
+}
+
+
 namespace std {
     template<int DIMS>
     struct hash<CellIdSet<DIMS> >: public unary_function<CellIdSet<DIMS>, size_t> {
