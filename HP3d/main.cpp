@@ -46,7 +46,8 @@ int main(int argc, const char * argv[]) {
     
     NestedDissectionStrategy<2, FlopsFunction> strat(cs);
     auto ret = strat.AbstractStrategy<2, FlopsFunction>::calculateStrategy();
-    cout << "RES " << ret.second << endl;
+    cout << "RES " << ret->getCost() << endl;
+    ret->printToStream(cout);
     
     return 0;
 }

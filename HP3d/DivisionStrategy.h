@@ -24,14 +24,21 @@ public:
 protected:
     CellIdSet<DIMS> ids;
     ptr ch[2];
+    result_t cost;
 
-    DivisionTree(CellIdSet<DIMS> ids, const ptr& a, const ptr& b):ids(ids) {
+    DivisionTree(CellIdSet<DIMS> ids, const ptr& a, const ptr& b):ids(ids), cost(0) {
         ch[0] = a; ch[1] = b;
     }
-    DivisionTree(CellIdSet<DIMS> ids):ids(ids) {
+    DivisionTree(CellIdSet<DIMS> ids):ids(ids), cost(0) {
         assert(ids.size() == 1);
     }
 public:
+    void setCost(result_t c) {
+        cost = c;
+    }
+    const result_t& getCost() const {
+        return cost;
+    }
     static ptr build(CellIdSet<DIMS> ids, const ptr& a, const ptr& b) {
         return ptr(new DivisionTree(ids, a, b));
     }
@@ -39,10 +46,18 @@ public:
     static ptr build(CellIdSet<DIMS> ids) {
         return ptr(new DivisionTree(ids));
     }
-    
-    
-    
+    void printToStream(std::ostream& os, int depth = 0) const {
+        FOR(i, depth) os << "  ";
+        if(ids.size() > 1) {
+            os << '(' << ids.size() << ')' << " = " << cost << std::endl;
+        } else {
+            os << '(' << *ids.begin() << ')' << " = " << cost << std::endl;
+        }
+        if(ch[0] != nullptr) ch[0]->printToStream(os, depth+1);
+        if(ch[1] != nullptr) ch[1]->printToStream(os, depth+1);
+    }
 };
+
 
 template<int DIMS>
 struct CellIdInBounds {
@@ -70,8 +85,8 @@ protected:
     using CellId = ::CellId<DIMS>;
     
     using NodeCounter = std::unordered_map<CellId, size_t>;
-    using result_pair = std::pair<typename DivisionTree::ptr, result_t>;
-    using result_triple = std::pair<result_pair, NodeCounter>;
+    using result = typename DivisionTree::ptr;
+    using result_pair = std::pair<result, NodeCounter>;
     using IdSet = ::CellIdSet<DIMS>;
     
     NodeCounter nodesForSingleCell(const CellId& cid) {
@@ -108,10 +123,10 @@ protected:
         return cf(reduced, all);
     }
 public:
-    virtual result_triple calculateStrategy(const IdSet&) = 0;
+    virtual result_pair calculateStrategy(const IdSet&) = 0;
     virtual ~AbstractStrategy(){};
     
-    virtual result_pair calculateStrategy() {
+    virtual result calculateStrategy() {
         auto leaves = cs.getLeavesIds();
         auto res = calculateStrategy(IdSet(leaves.begin(), leaves.end()));
         assert(res.second.empty());
@@ -129,17 +144,18 @@ public:
     
     using DivisionTree = typename Strategy::DivisionTree;
     using CellId = ::CellId<DIMS>;
+    using result = typename Strategy::result;
     using result_pair = typename Strategy::result_pair;
-    using result_triple = typename Strategy::result_triple;
     using IdSet = typename Strategy::IdSet;
     
-    virtual result_triple calculateStrategy(const IdSet& ids) {
+    virtual result_pair calculateStrategy(const IdSet& ids) {
         assert(ids.size() > 0);
-        result_triple res;
+        result_pair res;
+        result_t innerCost = 0;
         if(ids.size() == 1) {
             auto& cid = *(ids.begin());
-            res = result_triple(result_pair(DivisionTree::build(ids), 0),
-                                this->nodesForSingleCell(cid));
+            res = result_pair(DivisionTree::build(ids),
+                              this->nodesForSingleCell(cid));
         } else {
             auto bounds = CellId::getBounds(ids.getIds().begin(), ids.getIds().end());
             auto half = bounds.getHalf();
@@ -149,12 +165,13 @@ public:
             auto r1 = calculateStrategy(subsets.first);
             auto r2 = calculateStrategy(subsets.second);
             
-            res = result_triple(result_pair(DivisionTree::build(ids, r1.first.first, r2.first.first), 0),
-                                this->combine(r1.second, r2.second));
+            innerCost += r1.first->getCost() + r2.first->getCost();
+            res = result_pair(DivisionTree::build(ids, r1.first, r2.first),
+                              this->combine(r1.second, r2.second));
         }
         size_t all = res.second.size();
         size_t reduced = this->reduce(res.second);
-        res.first.second = this->calculateStepCost(all, reduced);
+        res.first->setCost(this->calculateStepCost(all, reduced) + innerCost);
         
         return res;
     }
