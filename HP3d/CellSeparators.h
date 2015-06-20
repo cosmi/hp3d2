@@ -32,12 +32,32 @@ struct InBoundsFilter {
 };
 
 template<int DIMS>
-struct NestedDissectionSeparator {
+struct NestedBisectionSeparator {
     using IdSet = CellIdSet<DIMS>;
     std::pair<IdSet, IdSet> operator()(const IdSet& ids) const {
         auto bounds = CellId<DIMS>::getBounds(ids.begin(), ids.end());
         auto half = bounds.getHalf();
         return ids.splitBy(InBoundsFilter<DIMS>(half));
+    }
+};
+
+
+
+
+template<int DIMS>
+struct ArbitrarySeparator {
+    struct ArbitraryFilter {
+        using CellId = ::CellId<DIMS>;
+        int a;
+        ArbitraryFilter():a(0){}
+        bool operator()(const CellId& ct) const {
+            (*const_cast<int*>(&a))++;
+            return (a&1);
+        }
+    };
+    using IdSet = CellIdSet<DIMS>;
+    std::pair<IdSet, IdSet> operator()(const IdSet& ids) const {
+        return ids.splitBy(ArbitraryFilter());
     }
 };
 //

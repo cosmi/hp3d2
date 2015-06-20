@@ -131,7 +131,7 @@ public:
 };
 
 template<int DIMS,
-         class DivisionFunction = NestedDissectionSeparator<DIMS>,
+         class DivisionFunction = NestedBisectionSeparator<DIMS>,
          class CostFunction = FlopsFunction,
          class CellType = Cell<DIMS>,
          class CellSpace = CellNodeSpace<DIMS, CellType> >

@@ -40,7 +40,7 @@ int main(int argc, const char * argv[]) {
 //    cd.draw(cs);
 //    cd.open(false);
     
-    
+//        NestedDivisionStrategy<DIMS, ArbitrarySeparator<DIMS> > strat(cs);
     NestedDivisionStrategy<DIMS> strat(cs);
     auto ret = strat.AbstractStrategy<DIMS>::calculateStrategy();
     

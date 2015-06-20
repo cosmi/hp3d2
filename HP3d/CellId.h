@@ -217,6 +217,13 @@ public:
         return CellId(Point(PointBase::selectMaxDims(a.getFrom(), b.getFrom())),
                       Point(PointBase::selectMinDims(a.getTo(), b.getTo())));
     }
+    
+    size_t hash() const {
+        size_t ret = 0;
+        const size_t PRIME = 920419823;
+        ret = getFrom().hash() + PRIME * getTo().hash();
+        return ret;
+    }
 };
 
 
@@ -231,10 +238,7 @@ namespace std {
     struct hash<CellId<DIMS> >: public unary_function<CellId<DIMS>, size_t> {
 
         size_t operator()(const CellId<DIMS>& id) const {
-            size_t ret = 0;
-            const size_t PRIME = 920419823;
-            ret = id.getFrom().hash() + PRIME * id.getTo().hash();
-            return ret;
+            return id.hash();
         }
     };
 }

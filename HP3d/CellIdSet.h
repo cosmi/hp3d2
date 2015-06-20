@@ -51,7 +51,11 @@ public:
     SetPair splitBy(const Filter& filter = Filter()) const {
         SetPair ret;
         for(auto & cid: *this) {
-            (filter(cid)?ret.first:ret.second).addId(cid);
+            if(filter(cid)){
+                ret.first.addId(cid);
+            } else {
+                ret.second.addId(cid);
+            }
         }
         return ret;
     }
