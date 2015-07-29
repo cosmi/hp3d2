@@ -125,6 +125,9 @@ public:
         FOR(i, DIMS) if(pt[i] != PointBaseN::dims[i]) return false;
         return true;
     }
+    const bool operator!=(const Point& pt) const {
+        return !(*this == pt);
+    }
     
     Point operator+(const PointDifference<DIMS>&) const;
     Point operator-(const PointDifference<DIMS>&) const;
@@ -241,8 +244,13 @@ public:
         return true;
     }
     size_t getLongestDim() const {
-        auto ret = std::max_element(PointBase::dims, PointBase::dims+DIMS) - PointBase::dims;
-        return ret;
+//        dim_t best = 0;
+//        size_t bestd = 0;
+//        FOR(i, DIMS) {
+//            if(this->dims[i] >= best) {bestd = i; best=this->dims[i];}
+//        }
+        return std::max_element(PointBase::dims, PointBase::dims+DIMS) - PointBase::dims;
+//        return bestd;
     }
 //    size_t getLongestBits() const {
 //        dim_t val = PointBase::dims[getLongestDim()];

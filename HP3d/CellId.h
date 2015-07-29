@@ -67,6 +67,9 @@ public:
     bool operator==(const CellId& cid) const {
         return getFrom() == cid.getFrom() && getTo() == cid.getTo();
     }
+    bool operator!=(const CellId& cid) const {
+        return getFrom() != cid.getFrom() || getTo() != cid.getTo();
+    }
     
     CellId getChild(mask_t id) const {
         auto pd = getSize()>>1;
@@ -240,6 +243,10 @@ public:
         const size_t PRIME = 920419823;
         ret = getFrom().hash() + PRIME * getTo().hash();
         return ret;
+    }
+    
+    static CellId getForSize(std::initializer_list<dim_t> list) {
+        return CellId(Point::origin(), Point(list));
     }
 };
 
