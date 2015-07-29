@@ -19,6 +19,10 @@
 #include "CostFunction.h"
 using namespace std;
 
+
+
+
+
 int main(int argc, const char * argv[]) {
     const int DIMS = 2;
     
@@ -27,7 +31,7 @@ int main(int argc, const char * argv[]) {
     cs.initWithOneCell(4);
 //    std::cout << cs.getBounds() << " " << cs.getBounds().getHalf() << std::endl;
 //    cs.splitTo(CellId<DIMS>::unit());
-    cs.splitTo(CellId<DIMS>::unit().move(0,3).move(1,3));
+    cs.splitTo(CellId<DIMS>::unit().move(0,7).move(1,7));
 //    cs.splitTo(CellId<2>::unit().move(0,23).move(1,23));
 //    buildSingularity(cs,0);
     enforceExtendedTauRule(cs,1);

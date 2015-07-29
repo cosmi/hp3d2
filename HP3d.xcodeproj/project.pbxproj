@@ -7,6 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D18C0DB1B69348000A96598 /* CellSeparators.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DB5E1F31B24699D004E5FAE /* CellSeparators.cpp */; };
+		0D18C0DC1B69348000A96598 /* GridBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DB5E1ED1B2346DA004E5FAE /* GridBuilder.cpp */; };
+		0D18C0DD1B69348000A96598 /* Cell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CA8E61B224F1E0019560D /* Cell.cpp */; };
+		0D18C0DE1B69348000A96598 /* CellDrawer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CA8D01B22238C0019560D /* CellDrawer.cpp */; };
+		0D18C0DF1B69348000A96598 /* CostFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DD103971B277CF9000474F2 /* CostFunction.cpp */; };
+		0D18C0E01B69348000A96598 /* EasyBMP_Geometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CA8DF1B2247530019560D /* EasyBMP_Geometry.cpp */; settings = {COMPILER_FLAGS = "-w"; }; };
+		0D18C0E11B69348000A96598 /* CellNodeSpace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DB5E1F91B247458004E5FAE /* CellNodeSpace.cpp */; };
+		0D18C0E21B69348000A96598 /* CellTreeOptimizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DB5E1F61B247206004E5FAE /* CellTreeOptimizer.cpp */; };
+		0D18C0E31B69348000A96598 /* EasyBMP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CA8D91B2246350019560D /* EasyBMP.cpp */; settings = {COMPILER_FLAGS = "-w"; }; };
+		0D18C0E41B69348000A96598 /* EasyBMP_Font.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CA8DD1B2247530019560D /* EasyBMP_Font.cpp */; settings = {COMPILER_FLAGS = "-w"; }; };
+		0D18C0E51B69348000A96598 /* main_tests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D18C0D61B6931E300A96598 /* main_tests.cpp */; };
+		0D18C0E61B69348000A96598 /* CellSpace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CA8E91B230DF00019560D /* CellSpace.cpp */; };
+		0D18C0E81B69348000A96598 /* DivisionStrategy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DD1039A1B277D91000474F2 /* DivisionStrategy.cpp */; };
 		0D8CA8C21B220E180019560D /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CA8C11B220E180019560D /* main.cpp */; };
 		0D8CA8D21B22238C0019560D /* CellDrawer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CA8D01B22238C0019560D /* CellDrawer.cpp */; };
 		0D8CA8DB1B2246350019560D /* EasyBMP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CA8D91B2246350019560D /* EasyBMP.cpp */; settings = {COMPILER_FLAGS = "-w"; }; };
@@ -23,6 +36,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		0D18C0EA1B69348000A96598 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
 		0D8CA8BC1B220E180019560D /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -35,6 +57,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0D18C0D61B6931E300A96598 /* main_tests.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main_tests.cpp; sourceTree = "<group>"; };
+		0D18C0D71B6931E300A96598 /* main_tests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = main_tests.h; sourceTree = "<group>"; };
+		0D18C0EE1B69348000A96598 /* HP3d test */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "HP3d test"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D8CA8BE1B220E180019560D /* HP3d */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = HP3d; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D8CA8C11B220E180019560D /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		0D8CA8C91B220EB30019560D /* CellId.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellId.h; sourceTree = "<group>"; };
@@ -72,6 +97,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		0D18C0E91B69348000A96598 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		0D8CA8BB1B220E180019560D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -82,6 +114,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0D18C0D51B6931BF00A96598 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				0D18C0D61B6931E300A96598 /* main_tests.cpp */,
+				0D18C0D71B6931E300A96598 /* main_tests.h */,
+			);
+			name = Tests;
+			sourceTree = "<group>";
+		};
 		0D8CA8B51B220E180019560D = {
 			isa = PBXGroup;
 			children = (
@@ -94,6 +135,7 @@
 			isa = PBXGroup;
 			children = (
 				0D8CA8BE1B220E180019560D /* HP3d */,
+				0D18C0EE1B69348000A96598 /* HP3d test */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -101,6 +143,7 @@
 		0D8CA8C01B220E180019560D /* HP3d */ = {
 			isa = PBXGroup;
 			children = (
+				0D18C0D51B6931BF00A96598 /* Tests */,
 				0D8CA8DC1B2246510019560D /* EasyBMP */,
 				0D8CA8C11B220E180019560D /* main.cpp */,
 				0D8CA8C91B220EB30019560D /* CellId.h */,
@@ -149,6 +192,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		0D18C0D91B69348000A96598 /* HP3d_test */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0D18C0EB1B69348000A96598 /* Build configuration list for PBXNativeTarget "HP3d_test" */;
+			buildPhases = (
+				0D18C0DA1B69348000A96598 /* Sources */,
+				0D18C0E91B69348000A96598 /* Frameworks */,
+				0D18C0EA1B69348000A96598 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HP3d_test;
+			productName = HP3d;
+			productReference = 0D18C0EE1B69348000A96598 /* HP3d test */;
+			productType = "com.apple.product-type.tool";
+		};
 		0D8CA8BD1B220E180019560D /* HP3d */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0D8CA8C51B220E180019560D /* Build configuration list for PBXNativeTarget "HP3d" */;
@@ -193,11 +253,32 @@
 			projectRoot = "";
 			targets = (
 				0D8CA8BD1B220E180019560D /* HP3d */,
+				0D18C0D91B69348000A96598 /* HP3d_test */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
+		0D18C0DA1B69348000A96598 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0D18C0DB1B69348000A96598 /* CellSeparators.cpp in Sources */,
+				0D18C0DC1B69348000A96598 /* GridBuilder.cpp in Sources */,
+				0D18C0DD1B69348000A96598 /* Cell.cpp in Sources */,
+				0D18C0DE1B69348000A96598 /* CellDrawer.cpp in Sources */,
+				0D18C0DF1B69348000A96598 /* CostFunction.cpp in Sources */,
+				0D18C0E01B69348000A96598 /* EasyBMP_Geometry.cpp in Sources */,
+				0D18C0E11B69348000A96598 /* CellNodeSpace.cpp in Sources */,
+				0D18C0E21B69348000A96598 /* CellTreeOptimizer.cpp in Sources */,
+				0D18C0E31B69348000A96598 /* EasyBMP.cpp in Sources */,
+				0D18C0E41B69348000A96598 /* EasyBMP_Font.cpp in Sources */,
+				0D18C0E51B69348000A96598 /* main_tests.cpp in Sources */,
+				0D18C0E61B69348000A96598 /* CellSpace.cpp in Sources */,
+				0D18C0E81B69348000A96598 /* DivisionStrategy.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		0D8CA8BA1B220E180019560D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -221,6 +302,20 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		0D18C0EC1B69348000A96598 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "HP3d test";
+			};
+			name = Debug;
+		};
+		0D18C0ED1B69348000A96598 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "HP3d test";
+			};
+			name = Release;
+		};
 		0D8CA8C31B220E180019560D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -324,6 +419,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		0D18C0EB1B69348000A96598 /* Build configuration list for PBXNativeTarget "HP3d_test" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0D18C0EC1B69348000A96598 /* Debug */,
+				0D18C0ED1B69348000A96598 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		0D8CA8B91B220E180019560D /* Build configuration list for PBXProject "HP3d" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
