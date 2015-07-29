@@ -154,6 +154,12 @@ public:
     static Point origin() {
         return Point();
     }
+    
+    Point withDimension(size_t dimension, dim_t value) const {
+        Point p = *this;
+        p->dims[dimension] = value;
+        return p;
+    }
 };
 
 
@@ -274,6 +280,12 @@ public:
     
     static PointDifference cube(dim_t size) {
         return PointDifference(size);
+    }
+    
+    static PointDifference singleDimension(size_t dim, dim_t size) {
+        PointDifference pd(0);
+        pd.dims[dim] = size;
+        return pd;
     }
     
     PointDifference setNonZeroDimsTo(dim_t value) const {

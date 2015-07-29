@@ -59,6 +59,17 @@ public:
         }
         return ret;
     }
+    
+    bool canBeSplitByHiperplane(const CellId& plane) const {
+        for(auto & cid: *this) {
+            if(plane.touchesInteriorOf(cid)) return false;
+        }
+        return true;
+    }
+    
+    CellId getBounds() {
+        return CellId::getBounds(this->begin(), this->end());
+    }
 };
 
 

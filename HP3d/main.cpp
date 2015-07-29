@@ -20,7 +20,7 @@
 using namespace std;
 
 int main(int argc, const char * argv[]) {
-    const int DIMS = 3;
+    const int DIMS = 2;
     
     using namespace std;
     auto cs = CellNodeSpace<DIMS>();
@@ -29,16 +29,16 @@ int main(int argc, const char * argv[]) {
 //    cs.splitTo(CellId<DIMS>::unit());
 //    cs.splitTo(CellId<2>::unit().move(0,7).move(1,7));
 //    cs.splitTo(CellId<2>::unit().move(0,23).move(1,23));
-    buildSingularity(cs,2);
+    buildSingularity(cs,0);
     enforceExtendedTauRule(cs);
 
 //    CellIdSet<2> cis(cs);
 //    cd.draw(splitSet(cis, cs.getBounds().getHalf()).first);
     cs.initNodes();
 
-//    CellDrawer<DIMS> cd(cs.getBounds(),50);
-//    cd.draw(cs);
-//    cd.open(false);
+    CellDrawer<DIMS> cd(cs.getBounds(),50);
+    cd.draw(cs);
+    cd.open(false);
     
 //        NestedDivisionStrategy<DIMS, ArbitrarySeparator<DIMS> > strat(cs);
     NestedDivisionStrategy<DIMS> strat(cs);

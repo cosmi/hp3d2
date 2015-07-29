@@ -48,6 +48,9 @@ public:
     dim_t getSide() const {
         return getSize().getSide();
     }
+    CellId operator+(const PointDifference & pd) const {
+        return CellId(getFrom() + pd, getTo() + pd);
+    }
     bool isCube() const {
         auto size = getSize();
         return size.isCube();
@@ -84,6 +87,13 @@ public:
         return CellId(from+diff, size);
     }
     
+    CellId moveDimension(size_t dimension, dim_t distance) const {
+        return *this + PointDifference::singleDimension(dimension, distance);
+    }
+    CellId withDimension(size_t dim, dim_t from, dim_t to) const {
+        return CellId(getFrom().withDimension(dim, from), getTo().withDimension(dim, to));
+    }
+    
     bool covers(const CellId& cid) const {
         return getFrom().hasRelation(cid.getFrom(), PointRelation::LESS_OR_EQ)
             && getTo().hasRelation(cid.getTo(), PointRelation::MORE_OR_EQ);
@@ -91,6 +101,13 @@ public:
     bool touches(const CellId& cid) const {
         FOR(i, DIMS) {
             if(to[i]<cid.getFrom()[i] || from[i] > cid.getTo()[i]) return false;
+        }
+        return true;
+    }
+    
+    bool touchesInteriorOf(const CellId& cid) const {
+        FOR(i, DIMS) {
+            if(getTo()[i] <= cid.getFrom()[i] || getFrom()[i] >= cid.getTo()[i]) return false;
         }
         return true;
     }

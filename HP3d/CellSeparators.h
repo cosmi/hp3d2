@@ -11,6 +11,7 @@
 
 #include <algorithm>
 #include <vector>
+#include <unordered_set>
 #include <unordered_map>
 #include <iostream>
 #include <numeric>
@@ -28,6 +29,69 @@ struct InBoundsFilter {
     InBoundsFilter(const CellId& cid) : bounds(cid){}
     bool operator()(const CellId& ct) const {
         return bounds.covers(ct);
+    }
+};
+
+
+
+template <int DIMS>
+struct OverPlaneFilter {
+    using CellId = ::CellId<DIMS>;
+    dim_t val;
+    size_t dim;
+    OverPlaneFilter(const CellId& plane){
+        FOR(i, DIMS) {
+            if(plane.getFrom()[i] == plane.getTo()[i]) {
+                this->dim = i;
+                this->val = plane.getFrom()[i];
+                break;
+            }
+        }
+    }
+    bool operator()(const CellId& ct) const {
+        return ct.getFrom()[this->dim] >= val;
+    }
+};
+
+
+template<int DIMS>
+std::vector<CellId<DIMS> > getSeparatorPlanes(const CellIdSet<DIMS>& set) {
+    using CellId = ::CellId<DIMS>;
+    CellId bounds = set.getBounds();
+    
+    std::unordered_set<CellId> candidates;
+
+    for(auto& cid: set) {
+        FOR(dim, DIMS) {
+            auto val = cid.getFrom()[dim];
+            candidates.push_back(bounds.withDimension(dim, val));
+        }
+    }
+    
+    std::vector<CellId> ret;
+    for(auto& cid: candidates) {
+        if(set.canBeSplitByHiperplane(cid)) {
+            ret.push_back(cid);
+        }
+    }
+    
+    return ret;
+}
+
+
+template<int DIMS>
+struct PlaneDivisorsGenerator {
+    using IdSet = CellIdSet<DIMS>;
+    std::vector<OverPlaneFilter<DIMS> > separators;
+    PlaneDivisorsGenerator(const IdSet & set) {
+        auto planes = getSeparatorPlanes(set);
+        for(auto& plane: planes) {
+            separators.emplace_back(plane);
+        }
+    }
+    
+    std::vector<OverPlaneFilter<DIMS> > getDividers() {
+        return separators;
     }
 };
 
