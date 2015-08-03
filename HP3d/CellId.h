@@ -101,6 +101,9 @@ public:
         return getFrom().hasRelation(cid.getFrom(), PointRelation::LESS_OR_EQ)
             && getTo().hasRelation(cid.getTo(), PointRelation::MORE_OR_EQ);
     }
+    /*
+     * Has at least common boundary?
+     */
     bool touches(const CellId& cid) const {
         FOR(i, DIMS) {
             if(to[i]<cid.getFrom()[i] || from[i] > cid.getTo()[i]) return false;
@@ -113,6 +116,19 @@ public:
             if(getTo()[i] <= cid.getFrom()[i] || getFrom()[i] >= cid.getTo()[i]) return false;
         }
         return true;
+    }
+    
+    bool isBoundaryOf(const CellId& cid) const {
+        int eq = 0;
+        int touch = 0;
+        FOR(i, DIMS) {
+            if(getFrom() == getTo()) {
+                if(getFrom() == cid.getFrom() || getFrom() == cid.getTo()) touch++;
+            } else {
+                if(getFrom() == cid.getFrom() && getTo() == cid.getTo()) eq++;
+            }
+        }
+        return (eq + touch == DIMS) && touch == 1;
     }
     
     /* Bounds methods */

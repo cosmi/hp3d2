@@ -160,7 +160,7 @@ public:
     
     Point withDimension(size_t dimension, dim_t value) const {
         Point p = *this;
-        p->dims[dimension] = value;
+        p.dims[dimension] = value;
         return p;
     }
 };

@@ -15,7 +15,7 @@
 
 #include "defs.h"
 #include "CellId.h"
-#include "CellSpace.h"
+//#include "CellSpace.h"
 
 template<int DIMS>
 struct CellIdComparator: public std::binary_function<CellId<DIMS>, CellId<DIMS>, bool> {
@@ -67,7 +67,7 @@ public:
         return true;
     }
     
-    CellId getBounds() {
+    CellId getBounds() const {
         return CellId::getBounds(this->begin(), this->end());
     }
 };

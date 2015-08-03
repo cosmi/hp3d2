@@ -21,10 +21,16 @@
 #include "CellSeparators.h"
 #include "DivisionStrategy.h"
 #include "CostFunction.h"
+#include "CellDividerGenerators.h"
+
+#include "TestCommons.h"
+#include "CellDividerGeneratorsTests.h"
+#include "CellIdTests.h"
 using namespace std;
 
 
 void runAllTests();
+
 
 
 

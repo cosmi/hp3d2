@@ -16,6 +16,7 @@
 #include <type_traits>
 #include "defs.h"
 #include "Cell.h"
+#include "CellIdSet.h"
 
 #include <boost/range/adaptor/map.hpp>
 #include <boost/range/adaptor/filtered.hpp>
@@ -123,6 +124,11 @@ public:
     auto getLeavesIds() const -> decltype(CellSpace::getLeaves() | boost::adaptors::transformed(ToIdTransform<CellId, CellType>())) {
         using namespace boost::adaptors;
         return getLeaves() | transformed(ToIdTransform<CellId, CellType>());
+    }
+    
+    CellIdSet<DIMS> getLeavesIdSet() const {
+        auto ids = getLeavesIds();
+        return CellIdSet<DIMS>(ids.begin(), ids.end());
     }
     
     void split(const CellId& id) {

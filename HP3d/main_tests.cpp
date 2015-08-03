@@ -9,11 +9,7 @@
 #include "main_tests.h"
 
 
-int err_count = 0;
-#define TEST(msg, code) {err_count = 0; std::cerr << "Testing: " << msg << "... " << std::endl; {code;} if(err_count == 0) {std::cerr << "SUCCESS" << std::endl;} else {std::cerr << "ERROR" << std::endl;} };
-#define CHECK(msg, code) if(!(code)) { std::cerr << "CHECK failed: " << msg << std::endl; err_count++;}
-#define ASSERT(msg, code) if(!(code)) { std::cerr << "ASSERT failed: " << msg << std::endl; err_count++; return; }
-#define CHECK_EQ(msg, value, code) {auto __result = code; if(__result != value) { std::cerr << "CHECK failed: " << msg << " (should be: " << value << ", was: " << __result << std::endl; err_count++;}}
+
 
 template<int DIMS>
 void initializeCellSpace(int size) {
@@ -53,20 +49,39 @@ void testBisectionStrategy() {
 }
 
 
-void testCellId() {
+template<int DIMS>
+result_t calculateByOptimizedPlanesStrategy(int sing, int lvl) {
     
-    CHECK_EQ("Valid half", CellId<2>::getForSize({4, 4}), CellId<2>::getForSize({4, 8}).getHalf());
-    CHECK_EQ("Valid half", CellId<2>::getForSize({4, 4}), CellId<2>::getForSize({8, 4}).getHalf());
+    auto cs = CellNodeSpace<DIMS>();
+    cs.initWithOneCell(lvl);
+    buildSingularity(cs,sing);
+    enforceExtendedTauRule(cs,1);
+    cs.initNodes();
+    
+    OptimizedDivisionStrategy<DIMS, PlaneDividersGenerator<DIMS> > strat(cs);
+    auto ret = strat.calculateStrategy();
+    
+    return ret->getCost();
+}
+
+
+void testOptimizedPlanesStrategy() {
+    CHECK_EQ("Valid result", 118, calculateByOptimizedPlanesStrategy<1>(0, 3));
+    CHECK_EQ("Valid result", 4529, calculateByOptimizedPlanesStrategy<2>(0, 3))
+    CHECK_EQ("Valid result", 9963, calculateByOptimizedPlanesStrategy<2>(1, 3))
 }
 
 
 
 void runAllTests() {
-    TEST("Test CellId", testCellId());
+    runCellIdTests();
+    runCellDividerGeneratorsTests();
     TEST("Cell space initializes correctly 2,4", initializeCellSpace<2>(4));
     TEST("Cell space initializes correctly 4,7", initializeCellSpace<4>(7));
     TEST("Cell space initializes correctly 2,0", initializeCellSpace<2>(0));
     TEST("Test Bisection Strategy", testBisectionStrategy());
+//    TEST("Test OptimizedPlanes Strategy", testOptimizedPlanesStrategy());
+
 }
 
 

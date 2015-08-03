@@ -172,7 +172,7 @@ protected:
     using IdSet = ::CellIdSet<DIMS>;
 
     std::unordered_map<IdSet, result_pair> cache;
-public:
+
     virtual result_pair calculateStrategy(const IdSet& ids) {
         auto it = cache.find(ids);
         if(it == cache.end()) {
@@ -182,7 +182,7 @@ public:
             return it->second;
         }
     };
-    
+public:
 };
 
 
@@ -228,7 +228,7 @@ class DividersGenerator,
 class CostFunction = FlopsFunction,
 class CellType = Cell<DIMS>,
 class CellSpace = CellNodeSpace<DIMS, CellType> >
-class OptimalDivisionStrategy : public AbstractStrategy<DIMS, CostFunction, CellType, CellSpace> {
+class OptimizedDivisionStrategy : public AbstractStrategy<DIMS, CostFunction, CellType, CellSpace> {
 protected:
     using Strategy = ::AbstractStrategy<DIMS, CostFunction, CellType, CellSpace>;
     
@@ -253,7 +253,7 @@ protected:
             if(subsets.first.size()==0 || subsets.second.size() == 0) continue;
             
             
-            result_pair res = calculateStrategyForSplitSets(subsets.first, subsets.second);
+            result_pair res = this->calculateStrategyForSplitSets(ids, subsets.first, subsets.second);
             
             if(!anyResult || res.first->getCost() < bestResult.first->getCost()) {
                 swap(res, bestResult);
@@ -268,11 +268,33 @@ protected:
     }
     
 public:
-    OptimalDivisionStrategy(const CellSpace& cs,
+    OptimizedDivisionStrategy(const CellSpace& cs,
                            const CostFunction& cf = CostFunction())
     : Strategy(cs, cf) {}
     
 };
+
+template<int DIMS,
+class DividersGenerator,
+class CostFunction = FlopsFunction,
+class CellType = Cell<DIMS>,
+class CellSpace = CellNodeSpace<DIMS, CellType> >
+class MemoizingOptimizedDivisionStrategy
+:   public MemoizingStrategy<DIMS, CostFunction, CellType, CellSpace>,
+    public OptimizedDivisionStrategy<DIMS, DividersGenerator, CostFunction, CellType, CellSpace>
+{
+    using MemoizingStrategy = ::MemoizingStrategy<DIMS, CostFunction, CellType, CellSpace>;
+    using OptimizedDivisionStrategy = ::OptimizedDivisionStrategy<DIMS, DividersGenerator, CostFunction, CellType, CellSpace>;
+public:
+        
+    MemoizingOptimizedDivisionStrategy(
+                                     const CellSpace& cs,
+                                     const CostFunction& cf = CostFunction())
+    : OptimizedDivisionStrategy(cs, cf), MemoizingStrategy(cs, cf) {
+        
+    }
+};
+
 
 
 #endif /* defined(__HP3d__DivisionStrategy__) */

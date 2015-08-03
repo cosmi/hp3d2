@@ -34,67 +34,6 @@ struct InBoundsFilter {
 
 
 
-template <int DIMS>
-struct OverPlaneFilter {
-    using CellId = ::CellId<DIMS>;
-    dim_t val;
-    size_t dim;
-    OverPlaneFilter(const CellId& plane){
-        FOR(i, DIMS) {
-            if(plane.getFrom()[i] == plane.getTo()[i]) {
-                this->dim = i;
-                this->val = plane.getFrom()[i];
-                break;
-            }
-        }
-    }
-    bool operator()(const CellId& ct) const {
-        return ct.getFrom()[this->dim] >= val;
-    }
-};
-
-
-template<int DIMS>
-std::vector<CellId<DIMS> > getSeparatorPlanes(const CellIdSet<DIMS>& set) {
-    using CellId = ::CellId<DIMS>;
-    CellId bounds = set.getBounds();
-    
-    std::unordered_set<CellId> candidates;
-
-    for(auto& cid: set) {
-        FOR(dim, DIMS) {
-            auto val = cid.getFrom()[dim];
-            candidates.push_back(bounds.withDimension(dim, val));
-        }
-    }
-    
-    std::vector<CellId> ret;
-    for(auto& cid: candidates) {
-        if(set.canBeSplitByHiperplane(cid)) {
-            ret.push_back(cid);
-        }
-    }
-    
-    return ret;
-}
-
-
-template<int DIMS>
-struct PlaneDivisorsGenerator {
-    using IdSet = CellIdSet<DIMS>;
-    std::vector<OverPlaneFilter<DIMS> > separators;
-    PlaneDivisorsGenerator(const IdSet & set) {
-        auto planes = getSeparatorPlanes(set);
-        for(auto& plane: planes) {
-            separators.emplace_back(plane);
-        }
-    }
-    
-    std::vector<OverPlaneFilter<DIMS> > getDividers() {
-        return separators;
-    }
-};
-
 template<int DIMS>
 struct NestedBisectionSeparator {
     using IdSet = CellIdSet<DIMS>;
@@ -102,6 +41,17 @@ struct NestedBisectionSeparator {
         auto bounds = CellId<DIMS>::getBounds(ids.begin(), ids.end());
         auto half = bounds.getHalf();
         return ids.splitBy(InBoundsFilter<DIMS>(half));
+    }
+};
+
+
+template<int DIMS, class Filter>
+struct FilterSeparator {
+    using IdSet = CellIdSet<DIMS>;
+    Filter filter;
+    FilterSeparator(const Filter& ft) : filter(ft) {}
+    std::pair<IdSet, IdSet> operator()(const IdSet& ids) const {
+        return ids.splitBy(filter);
     }
 };
 
@@ -124,22 +74,7 @@ struct ArbitrarySeparator {
         return ids.splitBy(ArbitraryFilter());
     }
 };
-//
-//
-//template <int DIMS>
-//std::pair<CellIdSet<DIMS>, CellIdSet<DIMS> > splitSet(const CellIdSet<DIMS>& cs, const CellId<DIMS>& bounds) {
-//    std::pair<CellIdSet<DIMS>, CellIdSet<DIMS> > ret;
-//    
-//    for(auto & id : cs.getIds()) {
-//        if(bounds.covers(id)) {
-//            ret.first.addId(id);
-//        } else {
-//            ret.second.addId(id);
-//        }
-//    }
-//    
-//    return ret;
-//}
+
 
 
 #endif /* defined(__HP3d__CellSeparators__) */
