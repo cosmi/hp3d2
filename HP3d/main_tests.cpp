@@ -65,12 +65,12 @@ result_t calculateByOptimizedPlanesStrategy(int sing, int lvl) {
     
     MemoizingOptimizedDivisionStrategy<DIMS, PlaneDividersGenerator<DIMS> > strat(cs);
     auto ret = strat.AbstractStrategy<DIMS>::calculateStrategy();
-//    NestedDivisionStrategy<DIMS> strat2(cs);
-//    auto ret2 = strat2.calculateStrategy();
+//    MemoizingOptimizedDivisionStrategy<DIMS, HalfDividersGenerator<DIMS> > strat2(cs);
+//    auto ret2 = strat2.AbstractStrategy<DIMS>::calculateStrategy();
 //    std::cout << *ret << "####\n";
 //    std::cout << *ret2 << "########\n";
-//
-    std::cout << "Cached " << strat.getMemoizedCount() << std::endl;
+////
+//        std::cout << "Cached " << strat.getMemoizedCount() << std::endl;
     return ret->getCost();
 }
 void testOptimizedPlanesStrategy() {
@@ -99,16 +99,20 @@ result_t calculateByOptimizedHalvesStrategy(int sing, int lvl) {
     //    std::cout << *ret2 << "########\n";
     //
     
-    std::cout << "Cached " << strat.getMemoizedCount() << std::endl;
+//    std::cout << "Cached " << strat.getMemoizedCount() << std::endl;
     return ret->getCost();
 }
 void testOptimizedHalvesStrategy() {
     TIME("1/0/3", CHECK_EQ("Valid result", 53, calculateByOptimizedHalvesStrategy<1>(0, 3)));
     TIME("2/0/3", CHECK_EQ("Valid result", 2837, calculateByOptimizedHalvesStrategy<2>(0, 3)));
-    TIME("2/1/3", CHECK_EQ("Valid result", 8811, calculateByOptimizedHalvesStrategy<2>(1, 3)));
+    TIME("2/1/3", CHECK_EQ("Valid result", 8869, calculateByOptimizedHalvesStrategy<2>(1, 3)));
     TIME("3/1/3", CHECK_EQ("Valid result", 661477, calculateByOptimizedHalvesStrategy<3>(1, 3)));
-    TIME("3/1/4", CHECK_EQ("Valid result", 1875409, calculateByOptimizedHalvesStrategy<3>(1, 4)));
+    TIME("3/1/4", CHECK_EQ("Valid result", 1901013, calculateByOptimizedHalvesStrategy<3>(1, 4)));
     TIME("3/2/3", CHECK_EQ("Valid result", 6532425, calculateByOptimizedHalvesStrategy<3>(2, 3)));
+    
+    TIME("4/1/3",CHECK_EQ("Valid result", 60114821, calculateByBisectionStrategy<4>(1, 3)));
+    TIME("5/0/3", CHECK_EQ("Valid result", 1015924531, calculateByBisectionStrategy<5>(0, 3)));
+
 }
 
 
@@ -123,7 +127,7 @@ void runAllTests() {
     TEST("Cell space initializes correctly 2,0", initializeCellSpace<2>(0));
     TEST("Test Bisection Strategy", testBisectionStrategy());
     TEST("Test OptimizedPlanes Strategy", testOptimizedPlanesStrategy());
-    TEST("Test OptimizedHalves Strategy", testOptimizedPlanesStrategy());
+    TEST("Test OptimizedHalves Strategy", testOptimizedHalvesStrategy());
 }
 
 

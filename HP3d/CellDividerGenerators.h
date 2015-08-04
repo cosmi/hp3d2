@@ -111,12 +111,16 @@ struct HalfDividersGenerator {
     std::vector<Separator> separators;
     HalfDividersGenerator(const IdSet & set) {
         auto bounds = set.getBounds();
+        auto size = bounds.getSize();
+        dim_t side = size[size.getLongestDim()];
+        assert(side%2 == 0);
         FOR(dim, DIMS) {
             dim_t f1 = bounds.getFrom()[dim];
             dim_t f2 = bounds.getTo()[dim];
-            if((f2-f1)%2 != 0) continue;
+            if((f2-f1) != side) continue;
             dim_t f = (f2-f1)/2 + f1;
             CellId plane = bounds.withDimension(dim, f, f);
+            //TODO: this check is unnecessary:
             if(set.canBeSplitByHiperplane(plane)) {
                 separators.emplace_back(Separator(Filter(plane)));
             }
