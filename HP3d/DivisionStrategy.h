@@ -60,6 +60,16 @@ public:
     }
 };
 
+template <int DIMS>
+std::ostream& operator<<(std::ostream& os,
+                         const DivisionTree<DIMS>& tree) {
+    tree.printToStream(os);
+    return os;
+}
+
+
+
+
 template<int DIMS, class CostFunction = FlopsFunction, class CellType = Cell<DIMS>, class CellSpace = CellNodeSpace<DIMS, CellType> >
 class AbstractStrategy {
 protected:
@@ -163,10 +173,11 @@ public:
 };
 
 template<int DIMS, class CostFunction = FlopsFunction, class CellType = Cell<DIMS>, class CellSpace = CellNodeSpace<DIMS, CellType> >
-class MemoizingStrategy: public AbstractStrategy<DIMS, CostFunction, CellType, CellSpace> {
+class MemoizingStrategy: public virtual AbstractStrategy<DIMS, CostFunction, CellType, CellSpace> {
 protected:
     using Strategy = ::AbstractStrategy<DIMS, CostFunction, CellType, CellSpace> ;
-    MemoizingStrategy(const CellSpace& cs, const CostFunction& cf ):Strategy(cs, cf) {}
+//    MemoizingStrategy(const CellSpace& cs, const CostFunction& cf ):Strategy(cs, cf) {}
+
     
     using result_pair = typename Strategy::result_pair;
     using IdSet = ::CellIdSet<DIMS>;
@@ -177,12 +188,14 @@ protected:
         auto it = cache.find(ids);
         if(it == cache.end()) {
             auto ret = this->calculateStrategyImpl(ids);
-            cache[ids] = ret;
+            return cache[ids] = ret;
         } else {
             return it->second;
         }
+
     };
 public:
+    MemoizingStrategy(){}
 };
 
 
@@ -191,7 +204,7 @@ template<int DIMS,
          class CostFunction = FlopsFunction,
          class CellType = Cell<DIMS>,
          class CellSpace = CellNodeSpace<DIMS, CellType> >
-class NestedDivisionStrategy : public AbstractStrategy<DIMS, CostFunction, CellType, CellSpace> {
+class NestedDivisionStrategy : public virtual AbstractStrategy<DIMS, CostFunction, CellType, CellSpace> {
     protected:
     using Strategy = ::AbstractStrategy<DIMS, CostFunction, CellType, CellSpace> ;
     DivisionFunction divider;
@@ -228,7 +241,7 @@ class DividersGenerator,
 class CostFunction = FlopsFunction,
 class CellType = Cell<DIMS>,
 class CellSpace = CellNodeSpace<DIMS, CellType> >
-class OptimizedDivisionStrategy : public AbstractStrategy<DIMS, CostFunction, CellType, CellSpace> {
+class OptimizedDivisionStrategy : public virtual AbstractStrategy<DIMS, CostFunction, CellType, CellSpace> {
 protected:
     using Strategy = ::AbstractStrategy<DIMS, CostFunction, CellType, CellSpace>;
     
@@ -280,17 +293,18 @@ class CostFunction = FlopsFunction,
 class CellType = Cell<DIMS>,
 class CellSpace = CellNodeSpace<DIMS, CellType> >
 class MemoizingOptimizedDivisionStrategy
-:   public MemoizingStrategy<DIMS, CostFunction, CellType, CellSpace>,
-    public OptimizedDivisionStrategy<DIMS, DividersGenerator, CostFunction, CellType, CellSpace>
+:   public virtual MemoizingStrategy<DIMS, CostFunction, CellType, CellSpace>,
+    public virtual OptimizedDivisionStrategy<DIMS, DividersGenerator, CostFunction, CellType, CellSpace>
 {
     using MemoizingStrategy = ::MemoizingStrategy<DIMS, CostFunction, CellType, CellSpace>;
+    using AbstractStrategy = ::AbstractStrategy<DIMS, CostFunction, CellType, CellSpace>;
     using OptimizedDivisionStrategy = ::OptimizedDivisionStrategy<DIMS, DividersGenerator, CostFunction, CellType, CellSpace>;
 public:
         
     MemoizingOptimizedDivisionStrategy(
                                      const CellSpace& cs,
                                      const CostFunction& cf = CostFunction())
-    : OptimizedDivisionStrategy(cs, cf), MemoizingStrategy(cs, cf) {
+    : OptimizedDivisionStrategy(cs, cf), MemoizingStrategy(), AbstractStrategy(cs, cf) {
         
     }
 };

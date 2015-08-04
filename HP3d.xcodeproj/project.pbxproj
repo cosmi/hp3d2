@@ -22,7 +22,8 @@
 		0D6739C91B6FEE46008B4549 /* CellDividerGenerators.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D6739C71B6FEE46008B4549 /* CellDividerGenerators.cpp */; };
 		0D6739CA1B6FEE46008B4549 /* CellDividerGenerators.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D6739C71B6FEE46008B4549 /* CellDividerGenerators.cpp */; };
 		0D6739CD1B6FF533008B4549 /* CellDividerGeneratorsTests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D6739CB1B6FF533008B4549 /* CellDividerGeneratorsTests.cpp */; };
-		0D6739D21B700311008B4549 /* CellIdTests.c in Sources */ = {isa = PBXBuildFile; fileRef = 0D6739D01B700311008B4549 /* CellIdTests.c */; };
+		0D6739D21B700311008B4549 /* CellIdTests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D6739D01B700311008B4549 /* CellIdTests.cpp */; };
+		0D6739E91B703318008B4549 /* TestCommons.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D6739E81B703318008B4549 /* TestCommons.cpp */; };
 		0D8CA8C21B220E180019560D /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CA8C11B220E180019560D /* main.cpp */; };
 		0D8CA8D21B22238C0019560D /* CellDrawer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CA8D01B22238C0019560D /* CellDrawer.cpp */; };
 		0D8CA8DB1B2246350019560D /* EasyBMP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CA8D91B2246350019560D /* EasyBMP.cpp */; settings = {COMPILER_FLAGS = "-w"; }; };
@@ -68,8 +69,9 @@
 		0D6739CC1B6FF533008B4549 /* CellDividerGeneratorsTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellDividerGeneratorsTests.h; sourceTree = "<group>"; };
 		0D6739CE1B6FF548008B4549 /* TestCommons.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestCommons.h; sourceTree = "<group>"; };
 		0D6739CF1B6FF73D008B4549 /* TestUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestUtils.h; sourceTree = "<group>"; };
-		0D6739D01B700311008B4549 /* CellIdTests.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = CellIdTests.c; sourceTree = "<group>"; };
+		0D6739D01B700311008B4549 /* CellIdTests.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CellIdTests.cpp; sourceTree = "<group>"; };
 		0D6739D11B700311008B4549 /* CellIdTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellIdTests.h; sourceTree = "<group>"; };
+		0D6739E81B703318008B4549 /* TestCommons.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestCommons.cpp; sourceTree = "<group>"; };
 		0D8CA8BE1B220E180019560D /* HP3d */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = HP3d; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D8CA8C11B220E180019560D /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = main.cpp; sourceTree = "<group>"; };
 		0D8CA8C91B220EB30019560D /* CellId.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellId.h; sourceTree = "<group>"; };
@@ -130,8 +132,9 @@
 				0D6739CB1B6FF533008B4549 /* CellDividerGeneratorsTests.cpp */,
 				0D6739CC1B6FF533008B4549 /* CellDividerGeneratorsTests.h */,
 				0D6739CE1B6FF548008B4549 /* TestCommons.h */,
+				0D6739E81B703318008B4549 /* TestCommons.cpp */,
 				0D6739CF1B6FF73D008B4549 /* TestUtils.h */,
-				0D6739D01B700311008B4549 /* CellIdTests.c */,
+				0D6739D01B700311008B4549 /* CellIdTests.cpp */,
 				0D6739D11B700311008B4549 /* CellIdTests.h */,
 			);
 			name = Tests;
@@ -279,7 +282,7 @@
 			files = (
 				0D18C0DB1B69348000A96598 /* CellSeparators.cpp in Sources */,
 				0D6739CA1B6FEE46008B4549 /* CellDividerGenerators.cpp in Sources */,
-				0D6739D21B700311008B4549 /* CellIdTests.c in Sources */,
+				0D6739D21B700311008B4549 /* CellIdTests.cpp in Sources */,
 				0D18C0DC1B69348000A96598 /* GridBuilder.cpp in Sources */,
 				0D6739CD1B6FF533008B4549 /* CellDividerGeneratorsTests.cpp in Sources */,
 				0D18C0DD1B69348000A96598 /* Cell.cpp in Sources */,
@@ -289,6 +292,7 @@
 				0D18C0E11B69348000A96598 /* CellNodeSpace.cpp in Sources */,
 				0D18C0E31B69348000A96598 /* EasyBMP.cpp in Sources */,
 				0D18C0E41B69348000A96598 /* EasyBMP_Font.cpp in Sources */,
+				0D6739E91B703318008B4549 /* TestCommons.cpp in Sources */,
 				0D18C0E51B69348000A96598 /* main_tests.cpp in Sources */,
 				0D18C0E61B69348000A96598 /* CellSpace.cpp in Sources */,
 				0D18C0E81B69348000A96598 /* DivisionStrategy.cpp in Sources */,

@@ -7,6 +7,7 @@
 //
 
 #include "CellIdTests.h"
+#include "TestCommons.h"
 
 void testCellIdOperations() {
     CHECK_EQ("Valid half", CellId<2>::getForSize({4, 4}), CellId<2>::getForSize({4, 8}).getHalf());
@@ -14,7 +15,9 @@ void testCellIdOperations() {
 }
 
 void testCellIdRelations() {
-    
+    CHECK("Is boundary 1", !CellId<2>({0,0}, {2,2}).isSideOf(CellId<2>({0,0}, {2,2})));
+    CHECK("Is boundary 2", CellId<2>({0,2}, {2,2}).isSideOf(CellId<2>({0,0}, {2,2})));
+    CHECK("Is boundary 3", !CellId<2>({0,0}, {3,2}).isSideOf(CellId<2>({0,0}, {2,2})));
 }
 
 

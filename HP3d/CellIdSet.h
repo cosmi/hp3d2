@@ -38,7 +38,9 @@ public:
     const CellIdSet& getIds() const {
         return *this;
     }
-    
+    CellIdSet& getIds() {
+        return *this;
+    }
     bool addId(const CellId& cid) {
         return this->insert(cid).second;
     }
@@ -50,7 +52,7 @@ public:
     template <class Filter>
     SetPair splitBy(const Filter& filter = Filter()) const {
         SetPair ret;
-        for(auto & cid: *this) {
+        for(auto & cid: getIds()) {
             if(filter(cid)){
                 ret.first.addId(cid);
             } else {
@@ -61,7 +63,7 @@ public:
     }
     
     bool canBeSplitByHiperplane(const CellId& plane) const {
-        for(auto & cid: *this) {
+        for(auto & cid: getIds()) {
             if(plane.touchesInteriorOf(cid)) return false;
         }
         return true;
@@ -69,6 +71,17 @@ public:
     
     CellId getBounds() const {
         return CellId::getBounds(this->begin(), this->end());
+    }
+    
+    size_t hash() const {
+        static const std::hash<CellId> subHash;
+        size_t ret = 0;
+        const size_t PRIME = 512927377;
+        for(auto & id : getIds()) {
+            ret*=PRIME;
+            ret+=subHash(id);
+        }
+        return ret;
     }
 };
 
@@ -89,17 +102,12 @@ std::ostream& operator<<(std::ostream& os,
 
 
 namespace std {
+    
     template<int DIMS>
     struct hash<CellIdSet<DIMS> >: public unary_function<CellIdSet<DIMS>, size_t> {
-        static const hash<CellId<DIMS> > subHash;
+
         size_t operator()(const CellIdSet<DIMS>& ids) const {
-            size_t ret = 0;
-            const size_t PRIME = 512927377;
-            for(auto & id : ids.getIds()) {
-                ret*=PRIME;
-                ret+=subHash(id);
-            }
-            return ret;
+            return ids.hash();
         }
     };
 }

@@ -23,6 +23,7 @@ class CellId {
 public:
     CellId(const Point& from, const Point& to): from(from), to(to){}
     CellId(const Point& from, const PointDifference& size): from(from), to(from+size){}
+    CellId(std::initializer_list<dim_t> from, std::initializer_list<dim_t> to) : from(from), to(to) {}
     static CellId unit() {
         return CellId(Point::origin(), PointDifference::cube(1));
     }
@@ -118,14 +119,14 @@ public:
         return true;
     }
     
-    bool isBoundaryOf(const CellId& cid) const {
+    bool isSideOf(const CellId& cid) const {
         int eq = 0;
         int touch = 0;
         FOR(i, DIMS) {
-            if(getFrom() == getTo()) {
-                if(getFrom() == cid.getFrom() || getFrom() == cid.getTo()) touch++;
+            if(getFrom()[i] == getTo()[i]) {
+                if(getFrom()[i] == cid.getFrom()[i] || getFrom()[i] == cid.getTo()[i]) touch++;
             } else {
-                if(getFrom() == cid.getFrom() && getTo() == cid.getTo()) eq++;
+                if(getFrom()[i] == cid.getFrom()[i] && getTo()[i] == cid.getTo()[i]) eq++;
             }
         }
         return (eq + touch == DIMS) && touch == 1;
@@ -270,7 +271,16 @@ public:
 template <int DIMS>
 std::ostream& operator<<(std::ostream& os,
                          const CellId<DIMS>& id) {
-    return os << "C[" << id.getFrom() << ';'<< id.getTo() << ']';
+//    return os << "C[" << id.getFrom() << ';'<< id.getTo() << ']';
+    
+    os << "C[";
+    bool first = true;
+    FOR(i, DIMS) {
+        if(!first) os << ';';
+        os << id.getFrom()[i] << ".." << id.getTo()[i];
+        first = false;
+    }
+    return os << ']';
 }
 
 namespace std {
@@ -280,6 +290,7 @@ namespace std {
         size_t operator()(const CellId<DIMS>& id) const {
             return id.hash();
         }
+        hash() {}
     };
 }
 

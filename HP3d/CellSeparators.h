@@ -53,6 +53,10 @@ struct FilterSeparator {
     std::pair<IdSet, IdSet> operator()(const IdSet& ids) const {
         return ids.splitBy(filter);
     }
+    
+    const Filter& getFilter() const {
+        return filter;
+    }
 };
 
 

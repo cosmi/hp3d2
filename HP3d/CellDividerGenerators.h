@@ -45,6 +45,13 @@ struct OverPlaneFilter {
     }
 };
 
+template <int DIMS>
+std::ostream& operator<<(std::ostream& os,
+                         const OverPlaneFilter<DIMS>& filter) {
+    return os << "OverPlaneFilter[" << filter.dim << ':' << filter.val << ']';
+}
+
+
 template<int DIMS>
 std::vector<CellId<DIMS> > getSeparatorPlanes(const CellIdSet<DIMS>& set) {
     using CellId = ::CellId<DIMS>;
@@ -54,14 +61,19 @@ std::vector<CellId<DIMS> > getSeparatorPlanes(const CellIdSet<DIMS>& set) {
     
     for(auto& cid: set) {
         FOR(dim, DIMS) {
-            auto val = cid.getFrom()[dim];
-            candidates.insert(bounds.withDimension(dim, val, val));
+            auto from = cid.getFrom()[dim];
+            auto to = cid.getTo()[dim];
+            candidates.insert(bounds.withDimension(dim, from, from));
+            candidates.insert(bounds.withDimension(dim, to, to));
         }
     }
     
     std::vector<CellId> ret;
     for(auto& cid: candidates) {
-        if(!cid.isBoundaryOf(bounds) && set.canBeSplitByHiperplane(cid)) {
+        
+//        std::cout << "CAND: " << cid << std::endl;
+        if(!cid.isSideOf(bounds) &&
+           set.canBeSplitByHiperplane(cid)) {
             ret.push_back(cid);
         }
     }

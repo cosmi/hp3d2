@@ -10,7 +10,7 @@
 #define __HP3d__CellIdTests__
 
 
-#include "TestCommons.h"
+
 #include "CellId.h"
 
 void runCellIdTests();

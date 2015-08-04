@@ -38,11 +38,16 @@ result_t calculateByBisectionStrategy(int sing, int lvl) {
 }
 
 void testBisectionStrategy() {
+    
+    CHECK_EQ("Valid result", 53, calculateByBisectionStrategy<1>(0, 3));
+    CHECK_EQ("Valid result", 2837, calculateByBisectionStrategy<2>(0, 3));
+    CHECK_EQ("Valid result", 9963, calculateByBisectionStrategy<2>(1, 3));
+    
     CHECK_EQ("Valid result", 118, calculateByBisectionStrategy<1>(0, 8));
-    CHECK_EQ("Valid result", 4529, calculateByBisectionStrategy<2>(0, 5))
-    CHECK_EQ("Valid result", 9963, calculateByBisectionStrategy<2>(1, 3))
-    CHECK_EQ("Valid result", 7590013, calculateByBisectionStrategy<3>(2, 3))
-    CHECK_EQ("Valid result", 222635, calculateByBisectionStrategy<3>(0, 4))
+    CHECK_EQ("Valid result", 4529, calculateByBisectionStrategy<2>(0, 5));
+    CHECK_EQ("Valid result", 71161, calculateByBisectionStrategy<2>(1, 5));
+    CHECK_EQ("Valid result", 7590013, calculateByBisectionStrategy<3>(2, 3));
+    CHECK_EQ("Valid result", 222635, calculateByBisectionStrategy<3>(0, 4));
     
     CHECK_EQ("Valid result", 60114821, calculateByBisectionStrategy<4>(1, 3));
     CHECK_EQ("Valid result", 1015924531, calculateByBisectionStrategy<5>(0, 3));
@@ -58,17 +63,24 @@ result_t calculateByOptimizedPlanesStrategy(int sing, int lvl) {
     enforceExtendedTauRule(cs,1);
     cs.initNodes();
     
-    OptimizedDivisionStrategy<DIMS, PlaneDividersGenerator<DIMS> > strat(cs);
-    auto ret = strat.calculateStrategy();
-    
+    MemoizingOptimizedDivisionStrategy<DIMS, PlaneDividersGenerator<DIMS> > strat(cs);
+    auto ret = strat.AbstractStrategy<DIMS>::calculateStrategy();
+//    NestedDivisionStrategy<DIMS> strat2(cs);
+//    auto ret2 = strat2.calculateStrategy();
+//    std::cout << *ret << "####\n";
+//    std::cout << *ret2 << "########\n";
+//    
     return ret->getCost();
 }
 
 
 void testOptimizedPlanesStrategy() {
-    CHECK_EQ("Valid result", 118, calculateByOptimizedPlanesStrategy<1>(0, 3));
-    CHECK_EQ("Valid result", 4529, calculateByOptimizedPlanesStrategy<2>(0, 3))
-    CHECK_EQ("Valid result", 9963, calculateByOptimizedPlanesStrategy<2>(1, 3))
+    TIME("1/0/3", CHECK_EQ("Valid result", 53, calculateByOptimizedPlanesStrategy<1>(0, 3)));
+    TIME("2/0/3", CHECK_EQ("Valid result", 2837, calculateByOptimizedPlanesStrategy<2>(0, 3)));
+    TIME("2/1/3", CHECK_EQ("Valid result", 8811, calculateByOptimizedPlanesStrategy<2>(1, 3)));
+    TIME("3/1/3", CHECK_EQ("Valid result", 661477, calculateByOptimizedPlanesStrategy<3>(1, 3)));
+    TIME("3/1/4", CHECK_EQ("Valid result", 1875409, calculateByOptimizedPlanesStrategy<3>(1, 4)));
+    TIME("3/2/3", CHECK_EQ("Valid result", 6532425, calculateByOptimizedPlanesStrategy<3>(2, 3)));
 }
 
 
@@ -80,7 +92,7 @@ void runAllTests() {
     TEST("Cell space initializes correctly 4,7", initializeCellSpace<4>(7));
     TEST("Cell space initializes correctly 2,0", initializeCellSpace<2>(0));
     TEST("Test Bisection Strategy", testBisectionStrategy());
-//    TEST("Test OptimizedPlanes Strategy", testOptimizedPlanesStrategy());
+    TEST("Test OptimizedPlanes Strategy", testOptimizedPlanesStrategy());
 
 }
 

@@ -9,7 +9,7 @@
 #ifndef __HP3d__CellDividerGeneratorsTests__
 #define __HP3d__CellDividerGeneratorsTests__
 
-#include "TestCommons.h"
+
 #include "CellDividerGenerators.h"
 
 void runCellDividerGeneratorsTests();
