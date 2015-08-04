@@ -23,6 +23,19 @@ size_t countDivisionsForSingularity(int dims, int lvl) {
     return generator.getDividers().size();
 }
 
+template<int DIMS>
+size_t countHalfDivisionsForSingularity(int dims, int lvl) {
+    auto ids = initSingularity<DIMS, CellSpace<DIMS> >(dims, lvl).getLeavesIdSet();
+    
+    
+    auto generator = HalfDividersGenerator<DIMS>(ids);
+    //    for(auto& separator : generator.getDividers()) {
+    //        std::cout << separator.getFilter() << std::endl;
+    //    }
+
+    return generator.getDividers().size();
+}
+
 void testPlaneDividersGenerator() {
     CHECK_EQ("Has correct no of divisions 2/0/2", 2, countDivisionsForSingularity<2>(0, 1));
     CHECK_EQ("Has correct no of divisions 2/0/3", 2, countDivisionsForSingularity<2>(0, 2));
@@ -30,6 +43,10 @@ void testPlaneDividersGenerator() {
     CHECK_EQ("Has correct no of divisions 3/1/2", 3, countDivisionsForSingularity<3>(1, 2));
     CHECK_EQ("Has correct no of divisions 3/2/2", 4, countDivisionsForSingularity<3>(2, 2));
     CHECK_EQ("Has correct no of divisions 3/3/2", 9, countDivisionsForSingularity<3>(3, 2));
+    
+    CHECK_EQ("Has correct no of divisions half 2/2/2", 2, countHalfDivisionsForSingularity<2>(2, 2));
+    CHECK_EQ("Has correct no of divisions half 3/3/2", 3, countHalfDivisionsForSingularity<3>(3, 2));
+    CHECK_EQ("Has correct no of divisions half 5/1/2", 5, countHalfDivisionsForSingularity<5>(1, 2));
 }
 
 void runCellDividerGeneratorsTests() {

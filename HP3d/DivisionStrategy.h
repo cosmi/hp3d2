@@ -196,6 +196,9 @@ protected:
     };
 public:
     MemoizingStrategy(){}
+    size_t getMemoizedCount() const {
+        return cache.size();
+    }
 };
 
 

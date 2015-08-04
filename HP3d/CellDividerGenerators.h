@@ -102,5 +102,32 @@ struct PlaneDividersGenerator {
     }
 };
 
+template<int DIMS>
+struct HalfDividersGenerator {
+    using CellId = ::CellId<DIMS>;
+    using IdSet = CellIdSet<DIMS>;
+    using Filter = OverPlaneFilter<DIMS>;
+    using Separator = FilterSeparator<DIMS, Filter>;
+    std::vector<Separator> separators;
+    HalfDividersGenerator(const IdSet & set) {
+        auto bounds = set.getBounds();
+        FOR(dim, DIMS) {
+            dim_t f1 = bounds.getFrom()[dim];
+            dim_t f2 = bounds.getTo()[dim];
+            if((f2-f1)%2 != 0) continue;
+            dim_t f = (f2-f1)/2 + f1;
+            CellId plane = bounds.withDimension(dim, f, f);
+            if(set.canBeSplitByHiperplane(plane)) {
+                separators.emplace_back(Separator(Filter(plane)));
+            }
+        }
+        assert(separators.size() > 0);
+    }
+    
+    std::vector<Separator> getDividers() {
+        return separators;
+    }
+};
+
 
 #endif /* defined(__HP3d__CellDividerGenerators__) */
