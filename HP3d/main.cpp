@@ -14,6 +14,7 @@
 #include "CellSpace.h"
 #include "CellNodeSpace.h"
 #include "CellDrawer.h"
+#include "CellDrawer3D.h"
 #include "CellIdSet.h"
 #include "GridBuilder.h"
 #include "CellSeparators.h"
@@ -27,7 +28,7 @@ using namespace std;
 
 
 int main(int argc, const char * argv[]) {
-    const int DIMS = 2;
+    const int DIMS = 3;
     
     using namespace std;
     auto cs = CellNodeSpace<DIMS>();
@@ -43,24 +44,22 @@ int main(int argc, const char * argv[]) {
 //    cd.draw(splitSet(cis, cs.getBounds().getHalf()).first);
     cs.initNodes();
 
-    CellDrawer<DIMS> cd0(cs.getBounds(),50);
-    CellDrawer<DIMS> cd1(cs.getBounds(),50);
-    CellSpace<DIMS>& cs1 = cs;
-    cd0.draw(cs1);
-    cd1.draw(cs1);
+    auto bounds = cs.getBounds();
+    CellDrawer3D cd(500, 500);
+    cd.setCamera(DrawPoint(4,4,-4), DrawPoint(0,0,0),20);
     
-//        NestedDivisionStrategy<DIMS, ArbitrarySeparator<DIMS> > strat(cs);
-//    NestedDivisionStrategy<DIMS> strat(cs);
-    MemoizingOptimizedDivisionStrategy<DIMS, PlaneDividersGenerator<DIMS> > strat1(cs);
-    AbstractStrategy<2>& strat = strat1;
-    auto ret = strat.calculateStrategy();
-//auto ret = strat.AbstractStrategy<2, FlopsFunction, Cell<2>, CellNodeSpace<2, Cell<2> > >::calculateStrategy();
+//    MemoizingOptimizedDivisionStrategy<DIMS, PlaneDividersGenerator<DIMS> > strat1(cs);
+//    AbstractStrategy<2>& strat = strat1;
+//    auto ret = strat.calculateStrategy();
+////auto ret = strat.AbstractStrategy<2, FlopsFunction, Cell<2>, CellNodeSpace<2, Cell<2> > >::calculateStrategy();
 //    cd0.draw(*ret, false);
-    cd1.draw(*ret, true);
-    cd0.open(false);
-    cd1.open(false);
+    cd.drawCell(bounds, Colors::RED);
+    cd.drawCell(bounds.flattenDimsByBitMask(4, 4));
+    cd.drawCell(bounds.flattenDimsByBitMask(4, 0), Colors::BLUE);
+
+    cd.open();
 //    ret->printToStream(cout);
-    cout << "RES " << ret->getCost() << endl;
+//    cout << "RES " << ret->getCost() << endl;
 //    std::system("sleep ");
     return 0;
 }

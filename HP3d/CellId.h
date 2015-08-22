@@ -10,6 +10,9 @@
 #define __HP3d__CellId__
 #include <algorithm>
 #include <list>
+#include <set>
+
+#include <unordered_set>
 #include "defs.h"
 #include "Point.h"
 
@@ -76,6 +79,11 @@ public:
         auto pd = getSize()>>1;
         auto bmpd = pd.selectDimsByBitMask(id);
         return CellId(getFrom() + bmpd, pd);
+    }
+    
+    CellId flattenDimsByBitMask(mask_t mask, mask_t side) const {
+        auto size = getSize();
+        return CellId(getFrom() + size.selectDimsByBitMask(side & mask), size.selectDimsByBitMask(~mask));
     }
     
     constexpr size_t getChildrenCount() const {
@@ -231,6 +239,23 @@ public:
         IdList list;
         getSameSizeNeighborsHelper(list, 0);
         return list;
+    }
+    
+    using IdSet = std::unordered_set<CellId>;
+    IdSet getLowerDimensionalityBounds(size_t target) const {
+        IdSet ret;
+        ret.insert(*this);
+        
+        for(size_t dims = getDimensionality(); dims > target; dims--) {
+            IdSet ret2;
+            for(auto & id: ret) {
+                auto l = id.getLowerDimensionalityIds();
+                ret2.insert(l.begin(), l.end());
+            }
+            swap(ret, ret2);
+        }
+        
+        return ret;
     }
     
     CellId getAlignedAncestor(int bits) const {

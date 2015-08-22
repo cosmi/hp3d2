@@ -90,8 +90,8 @@ public:
     
     void printAtCorner(const CellId<2>& i, const std::string& s, const Color& c = Colors::BLACK) {
         int x1 = toX(i.getFrom()[0]);
-        int x2 = toX(i.getTo()[0]);
-        int y1 = toX(i.getFrom()[1]);
+//        int x2 = toX(i.getTo()[0]);
+//        int y1 = toX(i.getFrom()[1]);
         int y2 = toX(i.getTo()[1]);
         int x = x1 + 5;// - 8*(int)s.size();
         int y = y2 - 16;

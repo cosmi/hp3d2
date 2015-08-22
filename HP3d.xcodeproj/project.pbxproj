@@ -28,6 +28,9 @@
 		0D8CA8E31B2247530019560D /* EasyBMP_Font.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CA8DD1B2247530019560D /* EasyBMP_Font.cpp */; settings = {COMPILER_FLAGS = "-w"; }; };
 		0D8CA8E41B2247530019560D /* EasyBMP_Geometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CA8DF1B2247530019560D /* EasyBMP_Geometry.cpp */; settings = {COMPILER_FLAGS = "-w"; }; };
 		0DB5E1EF1B2346DA004E5FAE /* GridBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DB5E1ED1B2346DA004E5FAE /* GridBuilder.cpp */; };
+		0DBE08161B88D1CC0010FA73 /* CellDrawer3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DBE08141B88D1CC0010FA73 /* CellDrawer3D.cpp */; };
+		0DBE08171B88D1CC0010FA73 /* CellDrawer3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DBE08141B88D1CC0010FA73 /* CellDrawer3D.cpp */; };
+		0DBE08181B88D1CC0010FA73 /* CellDrawer3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DBE08141B88D1CC0010FA73 /* CellDrawer3D.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -100,6 +103,8 @@
 		0DB5E1F11B237E96004E5FAE /* CellIdSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellIdSet.h; sourceTree = "<group>"; };
 		0DB5E1F41B24699D004E5FAE /* CellSeparators.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CellSeparators.h; sourceTree = "<group>"; };
 		0DB5E1FA1B247458004E5FAE /* CellNodeSpace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellNodeSpace.h; sourceTree = "<group>"; };
+		0DBE08141B88D1CC0010FA73 /* CellDrawer3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CellDrawer3D.cpp; sourceTree = "<group>"; };
+		0DBE08151B88D1CC0010FA73 /* CellDrawer3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellDrawer3D.h; sourceTree = "<group>"; };
 		0DD103981B277CF9000474F2 /* CostFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CostFunction.h; sourceTree = "<group>"; };
 		0DD1039B1B277D91000474F2 /* DivisionStrategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DivisionStrategy.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -170,6 +175,8 @@
 				0D6739C81B6FEE46008B4549 /* CellDividerGenerators.h */,
 				0D8CA8D01B22238C0019560D /* CellDrawer.cpp */,
 				0D8CA8D11B22238C0019560D /* CellDrawer.h */,
+				0DBE08141B88D1CC0010FA73 /* CellDrawer3D.cpp */,
+				0DBE08151B88D1CC0010FA73 /* CellDrawer3D.h */,
 				0D8CA8C91B220EB30019560D /* CellId.h */,
 				0DB5E1F11B237E96004E5FAE /* CellIdSet.h */,
 				0DB5E1FA1B247458004E5FAE /* CellNodeSpace.h */,
@@ -302,6 +309,7 @@
 			files = (
 				0D17D41F1B72562E007538E1 /* GridBuilder.cpp in Sources */,
 				0D17D4211B72562E007538E1 /* calculate.cpp in Sources */,
+				0DBE08181B88D1CC0010FA73 /* CellDrawer3D.cpp in Sources */,
 				0D17D4221B72562E007538E1 /* CellDrawer.cpp in Sources */,
 				0D17D4241B72562E007538E1 /* EasyBMP_Geometry.cpp in Sources */,
 				0D17D4261B72562E007538E1 /* EasyBMP.cpp in Sources */,
@@ -322,6 +330,7 @@
 				0D18C0E41B69348000A96598 /* EasyBMP_Font.cpp in Sources */,
 				0D6739E91B703318008B4549 /* TestCommons.cpp in Sources */,
 				0D18C0E51B69348000A96598 /* main_tests.cpp in Sources */,
+				0DBE08171B88D1CC0010FA73 /* CellDrawer3D.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -331,6 +340,7 @@
 			files = (
 				0DB5E1EF1B2346DA004E5FAE /* GridBuilder.cpp in Sources */,
 				0D8CA8D21B22238C0019560D /* CellDrawer.cpp in Sources */,
+				0DBE08161B88D1CC0010FA73 /* CellDrawer3D.cpp in Sources */,
 				0D8CA8E41B2247530019560D /* EasyBMP_Geometry.cpp in Sources */,
 				0D8CA8DB1B2246350019560D /* EasyBMP.cpp in Sources */,
 				0D8CA8E31B2247530019560D /* EasyBMP_Font.cpp in Sources */,
