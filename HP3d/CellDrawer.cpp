@@ -7,3 +7,4 @@
 //
 
 #include "CellDrawer.h"
+int CellDrawer<2>::counter = 0;

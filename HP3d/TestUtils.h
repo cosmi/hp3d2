@@ -18,6 +18,7 @@ CellSpace initSingularity(int dims, int lvl) {
     cs.initWithOneCell(lvl);
     buildSingularity(cs, dims);
     enforceExtendedTauRule(cs,1);
+    cs.initNodes();
     return cs;
 }
 

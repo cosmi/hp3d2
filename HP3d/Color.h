@@ -26,10 +26,14 @@ struct Color {
 namespace Colors {
     const Color RED = Color(255, 0, 0);
     const Color BLACK = Color(0, 0, 0);
+    const Color GRAY = Color(150, 150, 150);
     const Color WHITE = Color(255, 255, 255);
     const Color BLUE = Color(0, 0, 255);
     const Color GREEN = Color(0, 255, 0);
     const Color MAGENTA = Color(255, 0, 255);
+    const Color CYAN_SEQ[] = {RED, MAGENTA, BLUE, GREEN};
+    const size_t CYAN_SEQ_LEN = 4;
 }
+
 
 #endif /* defined(__HP3d__Color__) */
