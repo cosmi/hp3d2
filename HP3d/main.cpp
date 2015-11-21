@@ -15,6 +15,7 @@
 #include "CellNodeSpace.h"
 #include "CellDrawer.h"
 #include "CellDrawer3D.h"
+#include "CellDrawer3DSVG.hpp"
 #include "CellIdSet.h"
 #include "GridBuilder.h"
 #include "CellSeparators.h"
@@ -37,7 +38,7 @@ int main(int argc, const char * argv[]) {
 //    cs.splitTo(CellId<DIMS>::unit());
 ///    cs.splitTo(CellId<DIMS>::unit().move(0,7).move(1,7));
 //    cs.splitTo(CellId<2>::unit().move(0,23).move(1,23));
-    buildSingularity(cs,2);
+    buildSingularity(cs,1);
     enforceExtendedTauRule(cs,1);
 
 //    CellIdSet<2> cis(cs);
@@ -45,8 +46,8 @@ int main(int argc, const char * argv[]) {
     cs.initNodes();
 
     auto bounds = cs.getBounds();
-    CellDrawer3D cd(900, 900);
-    cd.setCamera(DrawPoint(24,-24,-40), DrawPoint(0,0,0),60, DrawPoint(-2,-5));
+    CellDrawer3D cd(620, 620);
+    cd.setCamera(DrawPoint(-15,-20,-40), DrawPoint(0,0,0), 50, DrawPoint(-200, -200));
     
 //    MemoizingOptimizedDivisionStrategy<DIMS, PlaneDividersGenerator<DIMS> > strat1(cs);
 //    AbstractStrategy<2>& strat = strat1;
@@ -58,10 +59,8 @@ int main(int argc, const char * argv[]) {
 //    cd.drawCell(bounds.flattenDimsByBitMask(4, 0), Colors::BLUE);
 //    CellId<DIMS> bounds2(Point<DIMS>({1,1,1}), Point<DIMS>({3,3,3}));
 //    cd.drawCell(bounds2, Colors::GREEN);
-
-    for(auto& id: cs.getLeavesIds()) {
-        cd.drawCell(id);
-    }
+    cd.drawExternalLines(cs.getLeavesIdSet(), bounds);
+    
     
     cd.open(false);
 //    ret->printToStream(cout);

@@ -13,6 +13,8 @@
 		0D17D4241B72562E007538E1 /* EasyBMP_Geometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CA8DF1B2247530019560D /* EasyBMP_Geometry.cpp */; settings = {COMPILER_FLAGS = "-w"; }; };
 		0D17D4261B72562E007538E1 /* EasyBMP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CA8D91B2246350019560D /* EasyBMP.cpp */; settings = {COMPILER_FLAGS = "-w"; }; };
 		0D17D4271B72562E007538E1 /* EasyBMP_Font.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CA8DD1B2247530019560D /* EasyBMP_Font.cpp */; settings = {COMPILER_FLAGS = "-w"; }; };
+		0D186C3F1C00802500887328 /* CellIdSetTests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D186C3D1C00802500887328 /* CellIdSetTests.cpp */; settings = {ASSET_TAGS = (); }; };
+		0D186C441C0084B500887328 /* CellDrawer3DSVG.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D186C421C0084B500887328 /* CellDrawer3DSVG.cpp */; settings = {ASSET_TAGS = (); }; };
 		0D18C0DC1B69348000A96598 /* GridBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DB5E1ED1B2346DA004E5FAE /* GridBuilder.cpp */; };
 		0D18C0DE1B69348000A96598 /* CellDrawer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CA8D01B22238C0019560D /* CellDrawer.cpp */; };
 		0D18C0E01B69348000A96598 /* EasyBMP_Geometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CA8DF1B2247530019560D /* EasyBMP_Geometry.cpp */; settings = {COMPILER_FLAGS = "-w"; }; };
@@ -68,6 +70,12 @@
 		0D17D4191B7252F5007538E1 /* calculate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = calculate.h; sourceTree = "<group>"; };
 		0D17D4301B72562E007538E1 /* HP3d copy */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "HP3d copy"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D17D4321B79FD35007538E1 /* DivisionTree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DivisionTree.h; sourceTree = "<group>"; };
+		0D186C3D1C00802500887328 /* CellIdSetTests.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CellIdSetTests.cpp; sourceTree = "<group>"; };
+		0D186C3E1C00802500887328 /* CellIdSetTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellIdSetTests.h; sourceTree = "<group>"; };
+		0D186C411C00846200887328 /* simple_svg.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = simple_svg.h; sourceTree = "<group>"; };
+		0D186C421C0084B500887328 /* CellDrawer3DSVG.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CellDrawer3DSVG.cpp; sourceTree = "<group>"; };
+		0D186C431C0084B500887328 /* CellDrawer3DSVG.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CellDrawer3DSVG.hpp; sourceTree = "<group>"; };
+		0D186C451C00852300887328 /* DrawPoint.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DrawPoint.h; sourceTree = "<group>"; };
 		0D18C0D61B6931E300A96598 /* main_tests.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main_tests.cpp; sourceTree = "<group>"; };
 		0D18C0D71B6931E300A96598 /* main_tests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = main_tests.h; sourceTree = "<group>"; };
 		0D18C0EE1B69348000A96598 /* HP3d test */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "HP3d test"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -144,6 +152,8 @@
 				0D6739CE1B6FF548008B4549 /* TestCommons.h */,
 				0D6739E81B703318008B4549 /* TestCommons.cpp */,
 				0D6739D01B700311008B4549 /* CellIdTests.cpp */,
+				0D186C3D1C00802500887328 /* CellIdSetTests.cpp */,
+				0D186C3E1C00802500887328 /* CellIdSetTests.h */,
 				0D6739D11B700311008B4549 /* CellIdTests.h */,
 			);
 			name = Tests;
@@ -170,13 +180,17 @@
 		0D8CA8C01B220E180019560D /* HP3d */ = {
 			isa = PBXGroup;
 			children = (
+				0D186C411C00846200887328 /* simple_svg.h */,
 				0D6739CF1B6FF73D008B4549 /* TestUtils.h */,
 				0D8CA8E71B224F1E0019560D /* Cell.h */,
 				0D6739C81B6FEE46008B4549 /* CellDividerGenerators.h */,
+				0D186C451C00852300887328 /* DrawPoint.h */,
 				0D8CA8D01B22238C0019560D /* CellDrawer.cpp */,
 				0D8CA8D11B22238C0019560D /* CellDrawer.h */,
 				0DBE08141B88D1CC0010FA73 /* CellDrawer3D.cpp */,
 				0DBE08151B88D1CC0010FA73 /* CellDrawer3D.h */,
+				0D186C421C0084B500887328 /* CellDrawer3DSVG.cpp */,
+				0D186C431C0084B500887328 /* CellDrawer3DSVG.hpp */,
 				0D8CA8C91B220EB30019560D /* CellId.h */,
 				0DB5E1F11B237E96004E5FAE /* CellIdSet.h */,
 				0DB5E1FA1B247458004E5FAE /* CellNodeSpace.h */,
@@ -321,6 +335,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0D186C3F1C00802500887328 /* CellIdSetTests.cpp in Sources */,
 				0D6739D21B700311008B4549 /* CellIdTests.cpp in Sources */,
 				0D18C0DC1B69348000A96598 /* GridBuilder.cpp in Sources */,
 				0D6739CD1B6FF533008B4549 /* CellDividerGeneratorsTests.cpp in Sources */,
@@ -338,6 +353,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0D186C441C0084B500887328 /* CellDrawer3DSVG.cpp in Sources */,
 				0DB5E1EF1B2346DA004E5FAE /* GridBuilder.cpp in Sources */,
 				0D8CA8D21B22238C0019560D /* CellDrawer.cpp in Sources */,
 				0DBE08161B88D1CC0010FA73 /* CellDrawer3D.cpp in Sources */,

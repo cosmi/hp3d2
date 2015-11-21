@@ -140,6 +140,21 @@ public:
         return (eq + touch == DIMS) && touch == 1;
     }
     
+    bool isOnFrontalSideOf(const CellId& cid) const {
+        int eq = 0;
+        int touch = 0;
+        FOR(i, DIMS) {
+            if(getFrom()[i] == getTo()[i]) {
+                if(getFrom()[i] == cid.getFrom()[i] /*|| getFrom()[i] == cid.getTo()[i]*/) touch++;
+            } else {
+                if(getFrom()[i] >= cid.getFrom()[i] || getTo()[i] <= cid.getTo()[i]) eq++;
+                eq++;
+            }
+        }
+        return (touch >= 1);
+    }
+
+    
     /* Bounds methods */
  
     static CellId getBounds(const CellId& a, const CellId& b) {

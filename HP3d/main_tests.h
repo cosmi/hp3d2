@@ -26,6 +26,7 @@
 #include "TestCommons.h"
 #include "CellDividerGeneratorsTests.h"
 #include "CellIdTests.h"
+#include "CellIdSetTests.h"
 using namespace std;
 
 

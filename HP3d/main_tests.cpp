@@ -121,6 +121,7 @@ void testOptimizedHalvesStrategy() {
 
 void runAllTests() {
     runCellIdTests();
+    runCellIdSetTests();
     runCellDividerGeneratorsTests();
     TEST("Cell space initializes correctly 2,4", initializeCellSpace<2>(4));
     TEST("Cell space initializes correctly 4,7", initializeCellSpace<4>(7));

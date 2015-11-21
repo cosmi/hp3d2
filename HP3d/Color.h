@@ -10,6 +10,7 @@
 #define __HP3d__Color__
 
 #include "EasyBMP.h"
+#include "simple_svg.h"
 
 struct Color {
     unsigned char r, g, b;
@@ -20,6 +21,9 @@ struct Color {
         p.Green = g;
         p.Blue = b;
         return p;
+    }
+    operator svg::Color() const {
+        return svg::Color(r,g,b);
     }
 };
 

@@ -31,20 +31,7 @@
 #include "CellIdSet.h"
 #include "Color.h"
 #include "DivisionStrategy.h"
-
-struct DrawPoint {
-    double x; double y; double z;
-    DrawPoint(double x = 0, double y = 0, double z = 0):x(x), y(y), z(z) {}
-    DrawPoint(const Point<3>& pt):DrawPoint(pt[0], pt[1], pt[2]) {}
-    DrawPoint(const Point<2>& pt):DrawPoint(pt[0], pt[1]) {}
-    
-};
-
-inline std::ostream& operator<<(std::ostream& os,
-                         const DrawPoint& pt) {
-    return os << "$[" << pt.x << ";" << pt.y << ";" << pt.z << "]";
-}
-
+#include "DrawPoint.h"
 
 
 class CellDrawer3D {
@@ -86,37 +73,7 @@ public:
         this->offset = offset;
     }
     
-//    void init(double x1, double x2, double y1, double y2, double scale) {
-//        width = (scale*(x2-x1)+1);
-//        height = (scale*(y2-y1)+1);
-//        offset = DrawPoint(x1, y1);
-//        boundary = DrawPoint(x2, y2);
-//        
-//        camera = DrawPoint((x1+x2)/2, (y1+y2)/2, -1);
-//        angle = DrawPoint(0.15,0.15,0);
-//        this->scale = scale;
-//    }
-//    
-////    CellDrawer3D(double x1, double x2, double y1, double y2, double scale) {
-////         init(x1,x2,y1,y2,scale);
-////    }
-//    
-//    CellDrawer3D(const DrawPoint& a, const DrawPoint& b, double scale) {
-//        
-//        camera = DrawPoint((a.x + b.x)/2, (a.y+b.y)/2, 4);
-//
-//        DrawPoint a1 = project(a);
-//        DrawPoint b1 = project(b);
-//        std::cout << a <<"->" << a1 << " " << b << "->" << b1 << std::endl;
-//        init(a1.x, b1.x, a1.y, b1.y, scale);
-//        std::cout << "INIT " << a1 << "-" << b1 << std::endl;
-//    }
-//    
-//    template<int DIMS>
-//    CellDrawer3D(const CellId<DIMS> & bounds, int scale) : CellDrawer3D(bounds.getFrom(), bounds.flattenDimsByBitMask(4, 0).getTo(), scale) {
-//        std::cout << "INIT " << bounds << std::endl;
-//    }
-//    
+
     
     void drawLine(DrawPoint a, DrawPoint b, const Color& color = Colors::BLACK) {
         std::cout << "LINE0 " << a << "-" << b << std::endl;
@@ -126,7 +83,7 @@ public:
 //        std::cout << "DOES " << (offset.x + a.x)*scale<< ' ' <<(offset.y + a.y)*scale<< ' ' <<(offset.x + b.x)*scale<< ' ' <<(offset.y + b.y)*scale<< std::endl;
 //        DrawFastLine(image, (offset.x + a.x)*scale, (offset.y + a.y)*scale, (offset.x + b.x)*scale, (offset.y + b.y)*scale, color);
         std::cout << " DOES " << a.x << " " << a.y << " " <<b.x << " " << b.y << std::endl;
-        DrawFastLine(image, (a.x-offset.x)*scale, (a.y-offset.y)*scale, (b.x-offset.x)*scale, (b.y-offset.y)*scale, color);
+        DrawFastLine(image, a.x*scale-offset.x, a.y*scale-offset.y, b.x*scale-offset.x, b.y*scale-offset.y, color);
     }
     
     template<int DIMS>
@@ -137,6 +94,25 @@ public:
             drawLine(line.getFrom(), line.getTo(), color);
         }
     }
+    
+    template<int DIMS>
+    void drawExternalLines(const CellId<DIMS>& bounds, const CellId<DIMS>& externalBounds, const Color& color = Colors::BLACK) {
+        auto lines = bounds.getLowerDimensionalityBounds(1);
+        std::cout << "BT " << bounds << " " << lines.size() << std::endl;
+        for(auto & line: lines) {
+            if(line.isOnFrontalSideOf(externalBounds)) {
+                drawLine(line.getFrom(), line.getTo(), color);
+            }
+        }
+    }
+    template<int DIMS>
+    void drawExternalLines(const CellIdSet<DIMS>& ids, const CellId<DIMS>& bounds, const Color& color = Colors::BLACK) {
+        for(auto& id: ids) {
+            drawExternalLines(id, bounds);
+        }
+    }
+
+    
     
     void save(const std::string& s) {
         image.WriteToFile(s.c_str());
