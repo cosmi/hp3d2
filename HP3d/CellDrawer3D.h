@@ -51,7 +51,7 @@ class CellDrawer3D {
     static int counter;
     int width, height;
     double scale;
-    DrawPoint camera, angle;
+    DrawPoint camera, angle, offset;
     BMP image;
     CellDrawer3D(const CellDrawer3D& that) = delete;
     
@@ -79,10 +79,11 @@ public:
         image.SetBitDepth(24);
     }
     
-    void setCamera(const DrawPoint& camera, const DrawPoint& angle, double scale) {
+    void setCamera(const DrawPoint& camera, const DrawPoint& angle, double scale, const DrawPoint& offset) {
         this->camera = camera;
         this->angle = angle;
         this->scale = scale;
+        this->offset = offset;
     }
     
 //    void init(double x1, double x2, double y1, double y2, double scale) {
@@ -125,7 +126,7 @@ public:
 //        std::cout << "DOES " << (offset.x + a.x)*scale<< ' ' <<(offset.y + a.y)*scale<< ' ' <<(offset.x + b.x)*scale<< ' ' <<(offset.y + b.y)*scale<< std::endl;
 //        DrawFastLine(image, (offset.x + a.x)*scale, (offset.y + a.y)*scale, (offset.x + b.x)*scale, (offset.y + b.y)*scale, color);
         std::cout << " DOES " << a.x << " " << a.y << " " <<b.x << " " << b.y << std::endl;
-        DrawFastLine(image, a.x*scale, a.y*scale, b.x*scale, b.y*scale, color);
+        DrawFastLine(image, (a.x-offset.x)*scale, (a.y-offset.y)*scale, (b.x-offset.x)*scale, (b.y-offset.y)*scale, color);
     }
     
     template<int DIMS>

@@ -37,7 +37,7 @@ int main(int argc, const char * argv[]) {
 //    cs.splitTo(CellId<DIMS>::unit());
 ///    cs.splitTo(CellId<DIMS>::unit().move(0,7).move(1,7));
 //    cs.splitTo(CellId<2>::unit().move(0,23).move(1,23));
-    buildSingularity(cs,1);
+    buildSingularity(cs,2);
     enforceExtendedTauRule(cs,1);
 
 //    CellIdSet<2> cis(cs);
@@ -45,19 +45,25 @@ int main(int argc, const char * argv[]) {
     cs.initNodes();
 
     auto bounds = cs.getBounds();
-    CellDrawer3D cd(500, 500);
-    cd.setCamera(DrawPoint(4,4,-4), DrawPoint(0,0,0),20);
+    CellDrawer3D cd(900, 900);
+    cd.setCamera(DrawPoint(24,-24,-40), DrawPoint(0,0,0),60, DrawPoint(-2,-5));
     
 //    MemoizingOptimizedDivisionStrategy<DIMS, PlaneDividersGenerator<DIMS> > strat1(cs);
 //    AbstractStrategy<2>& strat = strat1;
 //    auto ret = strat.calculateStrategy();
 ////auto ret = strat.AbstractStrategy<2, FlopsFunction, Cell<2>, CellNodeSpace<2, Cell<2> > >::calculateStrategy();
 //    cd0.draw(*ret, false);
-    cd.drawCell(bounds, Colors::RED);
-    cd.drawCell(bounds.flattenDimsByBitMask(4, 4));
-    cd.drawCell(bounds.flattenDimsByBitMask(4, 0), Colors::BLUE);
+//    cd.drawCell(bounds, Colors::RED);
+//    cd.drawCell(bounds.flattenDimsByBitMask(4, 4));
+//    cd.drawCell(bounds.flattenDimsByBitMask(4, 0), Colors::BLUE);
+//    CellId<DIMS> bounds2(Point<DIMS>({1,1,1}), Point<DIMS>({3,3,3}));
+//    cd.drawCell(bounds2, Colors::GREEN);
 
-    cd.open();
+    for(auto& id: cs.getLeavesIds()) {
+        cd.drawCell(id);
+    }
+    
+    cd.open(false);
 //    ret->printToStream(cout);
 //    cout << "RES " << ret->getCost() << endl;
 //    std::system("sleep ");

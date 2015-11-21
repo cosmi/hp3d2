@@ -42,7 +42,8 @@ result_record calculateResult(int sing, int lvl) {
     assert(sing <= DIMS);
     auto grid = initSingularity<DIMS, CellNodeSpace<DIMS> >(sing, lvl);
     
-    MemoizingOptimizedDivisionStrategy<DIMS, HalfDividersGenerator<DIMS> > strat(grid);
+//    MemoizingOptimizedDivisionStrategy<DIMS, HalfDividersGenerator<DIMS> > strat(grid);
+    NestedDivisionStrategy<DIMS> strat(grid);
     auto result = strat.AbstractStrategy<DIMS>::calculateStrategy();
     
     return result_record({DIMS, sing, lvl, grid.getFreeNodes().size(), grid.getLeavesIdSet().size(), result->getCost()});
@@ -65,16 +66,18 @@ result_record calculateResult(int dims, int sing, int lvl) {
 
 
 int main(int argc, char** argv) {
-    for(int dims = 1; dims<=5; dims++) {
-        FOR(sing, dims) {
+//    for(int dims = 1; dims<=5; dims++) {
+    int dims = 4;
+    int sing = 4;
+//        FOR(sing, dims) {
             for(int lvl = 0; lvl < 20; lvl++) {
                 double limit = lvl * dims * pow(pow(2, sing), lvl);;
                 if (limit > 50000) continue;
                 std::cout << limit << "\t";
                 std::cout << calculateResult(dims, sing, lvl) << std::endl;
             }
-        }
-    }
+//        }
+//    }
     
 }
 
